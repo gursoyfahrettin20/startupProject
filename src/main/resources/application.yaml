@@ -1,0 +1,47 @@
+server:
+  port: 5555
+
+spring:
+  web:
+    locale: en
+  datasource:
+    url: jdbc:h2:./devdb;Auto_server=TRUE
+    username: sa
+    generate-unique-name: false
+  jpa:
+    hibernate:
+      ddl-auto: create
+      
+#   #  User List alanındaki listeleme bölümünün sayfa listeleme parametrelerini düzenliyoruz.
+#   data:
+#     web:
+#       pageable:
+#         page-parameter: currentPage
+#         size-parameter: pageSize
+#         defaultPageSize: 10
+#         maxPageSize: 100
+#   batch:
+#     job:
+#       enabled: false
+
+  # Console bölümünde hata mesajlarınu loglayarak gösterim sağlar
+  #logging:
+  #  level:
+  #    org.springframework.web: DEBUG
+  #    com:
+  #      hoaxify:
+  #        ws:
+  #          WsApplication: ERROR
+  #    ROOT: ERROR
+
+  # spring:
+  #  jpa:
+  #    hibernate:
+  #      ddl-auto: create
+  #      ddl-auto: update
+  #    properties:
+  #     javax:
+  #       persistence:
+  #         validation:
+  #           mode: none
+
