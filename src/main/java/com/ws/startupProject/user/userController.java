@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ws.startupProject.error.ApiError;
 import com.ws.startupProject.shared.GenericMessage;
+import com.ws.startupProject.shared.Messages;
 import com.ws.startupProject.user.dto.UserCreate;
 import com.ws.startupProject.user.exception.ActivationNotificationException;
 import com.ws.startupProject.user.exception.NotUniqueEmailException;
@@ -11,7 +12,6 @@ import com.ws.startupProject.user.exception.NotUniqueEmailException;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -30,13 +30,10 @@ public class userController {
     @Autowired
     UserService userService;
 
-    @Autowired
-    MessageSource messageSource;
-
     @PostMapping("/api/v1/users")
     GenericMessage createUser(@Valid @RequestBody UserCreate user) {
         userService.save(user.toUser());
-        String message = messageSource.getMessage("website.messages.newuser", null, LocaleContextHolder.getLocale());
+        String message = Messages.getMessageForLocale("website.messages.newuser", LocaleContextHolder.getLocale());
         return new GenericMessage(message);
     }
 
@@ -45,7 +42,7 @@ public class userController {
     ApiError handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
         ApiError apiError = new ApiError();
         apiError.setPath("/api/v1/users");
-        String message = messageSource.getMessage("website.messages.validationerror", null, LocaleContextHolder.getLocale());
+        String message = Messages.getMessageForLocale("website.messages.validationerror", LocaleContextHolder.getLocale());
         apiError.setMessage(message);
         apiError.setStatus(400);
 
@@ -62,7 +59,7 @@ public class userController {
     ApiError handleNotEmailUniqueexception(NotUniqueEmailException exception) {
         ApiError apiError = new ApiError();
         apiError.setPath("/api/v1/users");
-        String message = messageSource.getMessage("startupProject.messages.validationerror", null, LocaleContextHolder.getLocale());
+        String message = Messages.getMessageForLocale("website.messages.validationerror", LocaleContextHolder.getLocale());
         apiError.setMessage(message);
         apiError.setStatus(400);
 
@@ -75,7 +72,7 @@ public class userController {
     ApiError handleActivationNotificationException(ActivationNotificationException exception) {
         ApiError apiError = new ApiError();
         apiError.setPath("/api/v1/users");
-        String message = messageSource.getMessage("website.messages.create.email.failure", null, LocaleContextHolder.getLocale());
+        String message = Messages.getMessageForLocale("website.messages.create.email.failure", LocaleContextHolder.getLocale());
         apiError.setMessage(message);
         apiError.setStatus(502);
         return apiError;

@@ -20,7 +20,7 @@ spring:
 
 websiteconfiguration:
   email:
-    username: tiara35@ethereal.email
+    username: edwina.glover28@ethereal.email
     password: ${PROJECT_EMAIL_PASSWORD}
     host: smtp.ethereal.email
     port: 587
