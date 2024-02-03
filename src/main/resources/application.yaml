@@ -20,7 +20,7 @@ spring:
 
 websiteconfiguration:
   email:
-    username: edwina.glover28@ethereal.email
+    username: charlene45@ethereal.email
     password: ${PROJECT_EMAIL_PASSWORD}
     host: smtp.ethereal.email
     port: 587
@@ -48,7 +48,9 @@ websiteconfiguration:
     # Console bölümünde hata mesajlarınu loglayarak gösterim sağlar
 logging:
   level:
-    org.springframework.web: DEBUG
+    org:
+      springframework:
+        web: DEBUG
     com:
       hoaxify:
         ws:
