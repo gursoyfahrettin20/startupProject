@@ -4,14 +4,18 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.mail.MailException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ws.startupProject.email.EmailService;
+import com.ws.startupProject.user.dto.UserDTO;
 import com.ws.startupProject.user.exception.ActivationNotificationException;
 import com.ws.startupProject.user.exception.InvalidTokenException;
+import com.ws.startupProject.user.exception.NotFoundException;
 import com.ws.startupProject.user.exception.NotUniqueEmailException;
 
 import jakarta.transaction.Transactional;
@@ -53,5 +57,13 @@ public class UserService {
         inDB.setActive(true);
         inDB.setActivationToken(null);
         userRepository.save(inDB);
+    }
+
+    public Page<User> getUsers(Pageable page) {
+        return userRepository.findAll(page);
+    }
+
+    public User getUser(long id) {
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
     }
 }

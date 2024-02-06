@@ -26,4 +26,12 @@ public class User {
 
     String activationToken;
 
+    String image;
+
+    Boolean isAdminstrator = false;
+
+    String firstName;
+
+    String lastName;
+
 }
