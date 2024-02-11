@@ -3,6 +3,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+///*Bu Class tamamı aplication.yml de "websiteconfiguration" bulunan congiguration dosyalarını */ 
 @ConfigurationProperties(prefix = "websiteconfiguration")
 public class WebSiteConfigurationProperties {
     

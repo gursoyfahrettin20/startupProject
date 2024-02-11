@@ -20,7 +20,7 @@ public class EmailService {
     JavaMailSenderImpl mailSenderImpl;
 
     @Autowired
-    WebSiteConfigurationProperties properties;
+    WebSiteConfigurationProperties properties; ///* WebSiteConfigurationProperties classında çekilen setting ayarlarından örnek alınır */
 
     @Autowired
     MessageSource messageSource;

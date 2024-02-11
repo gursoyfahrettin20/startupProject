@@ -21,7 +21,7 @@ public class UserDTO {
     public UserDTO(User user) {
         setId(user.getId());
         setUsername(user.getUsername());
-        setEmail(user.getUsername());
+        setEmail(user.getEmail());
         setIsAdminstrator(user.getIsAdminstrator());
         setFullName(user.getFirstName() + " " + user.getLastName());
     }
