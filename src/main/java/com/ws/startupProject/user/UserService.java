@@ -2,6 +2,7 @@ package com.ws.startupProject.user;
 
 import java.util.UUID;
 
+import com.ws.startupProject.user.dto.UserUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -29,6 +30,8 @@ public class UserService {
     EmailService emailService;
 
     PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    @Autowired
+    private UserService userService;
 
     // @Transactional dataların depended olan başka şeyler varsa ve onları
     // oluştururken bir hata oluşursa
@@ -49,6 +52,7 @@ public class UserService {
         }
     }
 
+    //  Kullanıcıyı aktif hale getirir.
     public void activateUser(String token) {
         User inDB = userRepository.findByActivationToken(token);
         if (inDB == null) {
@@ -59,15 +63,29 @@ public class UserService {
         userRepository.save(inDB);
     }
 
-    public Page<User> getUsers(Pageable page) {
-        return userRepository.findAll(page);
+    // Kullanıcıları Listeler
+    public Page<User> getUsers(Pageable page, User loggedInUser) {
+        if (loggedInUser == null) {
+            return userRepository.findAll(page);
+        }
+        return userRepository.findByIdNot(loggedInUser.getId(), page);
+
     }
 
+    // Kullanıcı varmı diye kontrol eder, yoksa hata mesajı döner.
     public User getUser(long id) {
         return userRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
     }
 
+    // kullanıcı emaili var mı yok mu diye kontrol eder.
     public User finByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    // Kullanıcı güncellemelerini yapar
+    public User updateUser(long id, UserUpdate userUpdate) {
+        User inDb = getUser(id);
+        inDb.setUsername(userUpdate.username());
+        return userRepository.save(inDb);
     }
 }

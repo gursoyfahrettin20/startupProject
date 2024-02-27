@@ -15,29 +15,29 @@ import com.ws.startupProject.user.UserRepository;
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 public class StartupProjectApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(StartupProjectApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(StartupProjectApplication.class, args);
+    }
 
-	@Bean
-	@Profile("developer")
-	CommandLineRunner dummyUserAdd(UserRepository userRepository) {
-		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		return (args) -> {
-			for (var i = 1; i <= 25; i++) {
-				User user = new User();
-				user.setUsername("user" + i);
-				user.setEmail("user" + i + "@mail.com");
-				user.setPassword(passwordEncoder.encode("P4ssword"));
-				user.setActive(true);
-				user.setFirstName("first" + i);
-				user.setLastName("last" + i);
-				if (i == 1) {
-					user.setIsAdminstrator(true);
-				}
-				userRepository.save(user);
-			}
-		};
-	}
+    @Bean
+    @Profile("developer")
+    CommandLineRunner dummyUserAdd(UserRepository userRepository) {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return (args) -> {
+            for (var i = 1; i <= 25; i++) {
+                User user = new User();
+                user.setUsername("user" + i);
+                user.setEmail("user" + i + "@mail.com");
+                user.setPassword(passwordEncoder.encode("P4ssword"));
+                user.setActive(true);
+                user.setFirstName("first" + i);
+                user.setLastName("last" + i);
+                if (i == 1) {
+                    user.setIsAdminstrator(true);
+                }
+                userRepository.save(user);
+            }
+        };
+    }
 
 }

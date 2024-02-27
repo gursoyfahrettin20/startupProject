@@ -1,6 +1,6 @@
 #FileLock
-#Wed Feb 21 00:13:19 TRT 2024
-server=192.168.1.9\:50980
+#Wed Feb 28 00:25:31 TRT 2024
+server=192.168.1.10\:50028
 hostName=FAHRETTINGURSOY
 method=file
-id=18dc85dadd6ee7d8aac622af2b4c067203f3a239b34
+id=18dec755debba92519e71316847763fa7155de2e7b5

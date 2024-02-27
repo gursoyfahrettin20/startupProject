@@ -1,10 +1,13 @@
 package com.ws.startupProject.user;
 
+import com.ws.startupProject.auth.token.TokenService;
 import com.ws.startupProject.shared.GenericMessage;
 import com.ws.startupProject.shared.Messages;
 import com.ws.startupProject.user.dto.UserCreate;
 import com.ws.startupProject.user.dto.UserDTO;
 
+import com.ws.startupProject.user.dto.UserUpdate;
+import com.ws.startupProject.user.exception.AuthorizationException;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,9 @@ public class userController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    TokenService tokenService;
 
     // user creation area
     @PostMapping("/users")
@@ -42,14 +48,24 @@ public class userController {
 
     // User List (all user)
     @GetMapping("/users")
-    public Page<UserDTO> getUser(Pageable page) {
-        return userService.getUsers(page).map(UserDTO::new);
+    public Page<UserDTO> getUser(Pageable page, @RequestHeader(name = "Authorization", required = false) String authorizationHeader) {
+        var loggedInUser = tokenService.VerifyToken(authorizationHeader);
+        return userService.getUsers(page, loggedInUser).map(UserDTO::new);
     }
 
     // select id for user detail area
     @GetMapping("/users/{id}")
     UserDTO getUserById(@PathVariable long id) {
         return new UserDTO(userService.getUser(id));
+    }
+
+    @PutMapping("/users/{id}")
+    UserDTO updateUser(@PathVariable long id, @Valid @RequestBody UserUpdate userUpdate, @RequestHeader(name = "Authorization", required = false) String authorizationHeader) {
+        var loggedInUser = tokenService.VerifyToken(authorizationHeader);
+        if (loggedInUser.getIsAdminstrator() == false && (loggedInUser == null || loggedInUser.getId() != id) ) {
+            throw new AuthorizationException();
+        }
+        return new UserDTO(userService.updateUser(id, userUpdate));
     }
 
 }

@@ -2,6 +2,8 @@ server:
   port: 5555
 
 spring:
+  main:
+    allow-circular-references: true
   profiles:
     active: developer
   web:
@@ -20,7 +22,7 @@ spring:
 
 websiteconfiguration:
   email:
-    username: cloyd.okeefe@ethereal.email
+    username: kieran.herman15@ethereal.email
     password: ${PROJECT_EMAIL_PASSWORD}
     host: smtp.ethereal.email
     port: 587
@@ -30,16 +32,16 @@ websiteconfiguration:
 ---
 spring:
   config:
-      activate:
-        on-profile: production
+    activate:
+      on-profile: production
 websiteconfiguration:
   client:
     host: http://www.fahrettingursoy.com
 ---
 spring:
   config:
-      activate:
-        on-profile: developer
+    activate:
+      on-profile: developer
 websiteconfiguration:
   client:
     host: http://localhost:3434
@@ -50,9 +52,17 @@ logging:
   level:
     org:
       springframework:
-        web: DEBUG
+        web: ERROR
+#        web: DEBUG
     com:
-      hoaxify:
-        ws:
+      ws:
+        startupProject:
           WsApplication: ERROR
     ROOT: ERROR
+#    DEBUG
+#    ERROR
+#    FATAL
+#    INFO
+#    OFF
+#    TRACE
+#    WARN

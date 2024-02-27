@@ -3,6 +3,7 @@ package com.ws.startupProject.error;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.ws.startupProject.user.exception.*;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,11 +13,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.ws.startupProject.auth.Exception.AuthenticationExcepion;
+import com.ws.startupProject.user.exception.AuthorizationException;
 import com.ws.startupProject.shared.Messages;
-import com.ws.startupProject.user.exception.ActivationNotificationException;
-import com.ws.startupProject.user.exception.InvalidTokenException;
-import com.ws.startupProject.user.exception.NotFoundException;
-import com.ws.startupProject.user.exception.NotUniqueEmailException;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,14 +29,15 @@ public class ErrorHandler {
             InvalidTokenException.class,
             NotFoundException.class,
             EntityNotFoundException.class,
-            AuthenticationExcepion.class
+            AuthenticationExcepion.class,
+            AuthorizationException.class
     })
     ResponseEntity<ApiError> handleException(Exception exception, HttpServletRequest request) {
         ApiError apiError = new ApiError();
         apiError.setPath(request.getRequestURI());
         apiError.setMessage(exception.getMessage());
 
-        // Customization NotValid Exception Exception area for unknown errors
+        // Customization NotValid exception, exception area for unknown errors
         if (exception instanceof MethodArgumentNotValidException) {
             String message = Messages.getMessageForLocale("website.messages.validationerror",
                     LocaleContextHolder.getLocale());
@@ -73,6 +72,8 @@ public class ErrorHandler {
             apiError.setStatus(404);
         }else if (exception instanceof AuthenticationExcepion) { // Customization area for Authentication errors (select id for user detail area)
             apiError.setStatus(401);
+        }else if (exception instanceof AuthorizationException) { // Customization area for AuthorizationException errors (select id for user detail area)
+            apiError.setStatus(403);
         }
 
         return ResponseEntity.status(apiError.getStatus()).body(apiError);

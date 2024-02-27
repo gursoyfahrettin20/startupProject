@@ -50,8 +50,7 @@ public class EmailService {
     public void userSendActivationEmail(String email, String activationToken) {
         var activationUrl = properties.getClient().host() + "/activation/" + activationToken;
         var title = messageSource.getMessage("website.mail.user.create.title", null, LocaleContextHolder.getLocale());
-        var clickHere = messageSource.getMessage("website.mail.user.create.clickHere", null,
-                LocaleContextHolder.getLocale());
+        var clickHere = messageSource.getMessage("website.mail.user.create.clickHere", null, LocaleContextHolder.getLocale());
 
         var mailBody = ActivationEmailThemplateForHtml
                 .replace("${url}", activationUrl)
