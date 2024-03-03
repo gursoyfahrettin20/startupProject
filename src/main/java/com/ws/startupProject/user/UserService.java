@@ -2,18 +2,17 @@ package com.ws.startupProject.user;
 
 import java.util.UUID;
 
+import com.ws.startupProject.configuration.CurrentUser;
 import com.ws.startupProject.user.dto.UserUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.mail.MailException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ws.startupProject.email.EmailService;
-import com.ws.startupProject.user.dto.UserDTO;
 import com.ws.startupProject.user.exception.ActivationNotificationException;
 import com.ws.startupProject.user.exception.InvalidTokenException;
 import com.ws.startupProject.user.exception.NotFoundException;
@@ -29,7 +28,9 @@ public class UserService {
     @Autowired
     EmailService emailService;
 
-    PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     @Autowired
     private UserService userService;
 
@@ -64,11 +65,11 @@ public class UserService {
     }
 
     // Kullanıcıları Listeler
-    public Page<User> getUsers(Pageable page, User loggedInUser) {
-        if (loggedInUser == null) {
+    public Page<User> getUsers(Pageable page, CurrentUser currentUser) {
+        if (currentUser == null) {
             return userRepository.findAll(page);
         }
-        return userRepository.findByIdNot(loggedInUser.getId(), page);
+        return userRepository.findByIdNot(currentUser.getId(), page);
 
     }
 

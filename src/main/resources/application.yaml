@@ -50,14 +50,6 @@ websiteconfiguration:
     # Console bölümünde hata mesajlarınu loglayarak gösterim sağlar
 logging:
   level:
-    org:
-      springframework:
-        web: ERROR
-#        web: DEBUG
-    com:
-      ws:
-        startupProject:
-          WsApplication: ERROR
     ROOT: ERROR
 #    DEBUG
 #    ERROR

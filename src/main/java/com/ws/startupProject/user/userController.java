@@ -1,6 +1,7 @@
 package com.ws.startupProject.user;
 
 import com.ws.startupProject.auth.token.TokenService;
+import com.ws.startupProject.configuration.CurrentUser;
 import com.ws.startupProject.shared.GenericMessage;
 import com.ws.startupProject.shared.Messages;
 import com.ws.startupProject.user.dto.UserCreate;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/api/v1")
@@ -48,9 +51,8 @@ public class userController {
 
     // User List (all user)
     @GetMapping("/users")
-    public Page<UserDTO> getUser(Pageable page, @RequestHeader(name = "Authorization", required = false) String authorizationHeader) {
-        var loggedInUser = tokenService.VerifyToken(authorizationHeader);
-        return userService.getUsers(page, loggedInUser).map(UserDTO::new);
+    public Page<UserDTO> getUser(Pageable page, @AuthenticationPrincipal CurrentUser currentUser) {
+        return userService.getUsers(page, currentUser).map(UserDTO::new);
     }
 
     // select id for user detail area
@@ -59,10 +61,10 @@ public class userController {
         return new UserDTO(userService.getUser(id));
     }
 
+    // Yetkilendirme bölgesi
     @PutMapping("/users/{id}")
-    UserDTO updateUser(@PathVariable long id, @Valid @RequestBody UserUpdate userUpdate, @RequestHeader(name = "Authorization", required = false) String authorizationHeader) {
-        var loggedInUser = tokenService.VerifyToken(authorizationHeader);
-        if (loggedInUser.getIsAdminstrator() == false && (loggedInUser == null || loggedInUser.getId() != id) ) {
+    UserDTO updateUser(@PathVariable long id, @Valid @RequestBody UserUpdate userUpdate, @AuthenticationPrincipal CurrentUser currentUser) {
+        if (!currentUser.getIsAdministrator() && (currentUser.getId() != id)) {
             throw new AuthorizationException();
         }
         return new UserDTO(userService.updateUser(id, userUpdate));

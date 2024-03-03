@@ -1,7 +1,6 @@
 package com.ws.startupProject.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +22,8 @@ public class AuthService {
     @Autowired
     TokenService tokenService;
 
-    PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     public AuthResponse authenticate(Credentials creds) {
         User inDb = userService.finByEmail(creds.email());
@@ -34,7 +34,7 @@ public class AuthService {
             throw new AuthenticationExcepion();
         }
         Token token = tokenService.CreateToken(inDb, creds);
-        
+
         AuthResponse authResponse = new AuthResponse();
         authResponse.setToken(token);
         authResponse.setUser(new UserDTO(inDb));

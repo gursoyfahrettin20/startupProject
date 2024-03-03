@@ -28,7 +28,7 @@ public class User {
 
     String image;
 
-    Boolean isAdminstrator = false;
+    Boolean isAdministrator = false;
 
     String firstName;
 

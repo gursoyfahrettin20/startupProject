@@ -14,7 +14,7 @@ public class UserDTO {
 
     String image;
 
-    Boolean isAdminstrator = false;
+    Boolean isAdministrator = false;
 
     String fullName;
 
@@ -22,7 +22,7 @@ public class UserDTO {
         setId(user.getId());
         setUsername(user.getUsername());
         setEmail(user.getEmail());
-        setIsAdminstrator(user.getIsAdminstrator());
+        setIsAdministrator(user.getIsAdministrator());
         setFullName(user.getFirstName() + " " + user.getLastName());
     }
 
