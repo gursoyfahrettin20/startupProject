@@ -1,10 +1,6 @@
 package com.ws.startupProject.user;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
@@ -26,6 +22,7 @@ public class User {
 
     String activationToken;
 
+    @Lob
     String image;
 
     Boolean isAdministrator = false;

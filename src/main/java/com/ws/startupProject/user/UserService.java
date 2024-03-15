@@ -3,6 +3,8 @@ package com.ws.startupProject.user;
 import java.util.UUID;
 
 import com.ws.startupProject.configuration.CurrentUser;
+import com.ws.startupProject.configuration.WebSiteConfigurationProperties;
+import com.ws.startupProject.file.FileService;
 import com.ws.startupProject.user.dto.UserUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -32,7 +34,10 @@ public class UserService {
     PasswordEncoder passwordEncoder;
 
     @Autowired
-    private UserService userService;
+    private FileService fileService;
+
+    @Autowired
+    WebSiteConfigurationProperties properties;
 
     // @Transactional dataların depended olan başka şeyler varsa ve onları
     // oluştururken bir hata oluşursa
@@ -87,6 +92,10 @@ public class UserService {
     public User updateUser(long id, UserUpdate userUpdate) {
         User inDb = getUser(id);
         inDb.setUsername(userUpdate.username());
+        if (userUpdate.image() != null) {
+            String filename = fileService.saveBase64StringAsFile(userUpdate.image(), properties.getStorage().getProfile() , inDb.getUsername());
+            inDb.setImage(filename);
+        }
         return userRepository.save(inDb);
     }
 }

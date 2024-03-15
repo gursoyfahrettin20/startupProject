@@ -27,7 +27,7 @@ public class StartupProjectApplication {
                 user.setUsername("user" + i);
                 user.setEmail("user" + i + "@mail.com");
                 user.setPassword(passwordEncoder.encode("P4ssword"));
-                user.setActive(true);
+                user.setActive(i == 2 ? false : true);
                 user.setFirstName("first" + i);
                 user.setLastName("last" + i);
                 if (i == 1) {

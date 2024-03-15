@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 public interface UserProjection {
     long getId();
 
-    String getUSername();
+    String getUsername();
 
     String getEmail();
 

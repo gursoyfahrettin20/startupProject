@@ -14,12 +14,14 @@ public class CurrentUser implements UserDetails {
     Long id;
     String username;
     String password;
+    Boolean isEnabled;
     Boolean isAdministrator;
 
     public CurrentUser(User user) {
         this.id = user.getId();
         this.username = user.getFirstName();
         this.password = user.getPassword();
+        this.isEnabled = user.getActive();
         this.isAdministrator = user.getIsAdministrator();
     }
 
@@ -45,6 +47,6 @@ public class CurrentUser implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return isEnabled;
     }
 }

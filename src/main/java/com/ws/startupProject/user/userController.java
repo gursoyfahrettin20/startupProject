@@ -1,6 +1,5 @@
 package com.ws.startupProject.user;
 
-import com.ws.startupProject.auth.token.TokenService;
 import com.ws.startupProject.configuration.CurrentUser;
 import com.ws.startupProject.shared.GenericMessage;
 import com.ws.startupProject.shared.Messages;
@@ -8,14 +7,13 @@ import com.ws.startupProject.user.dto.UserCreate;
 import com.ws.startupProject.user.dto.UserDTO;
 
 import com.ws.startupProject.user.dto.UserUpdate;
-import com.ws.startupProject.user.exception.AuthorizationException;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,9 +24,6 @@ public class userController {
 
     @Autowired
     UserService userService;
-
-    @Autowired
-    TokenService tokenService;
 
     // user creation area
     @PostMapping("/users")
@@ -63,11 +58,10 @@ public class userController {
 
     // Yetkilendirme bölgesi
     @PutMapping("/users/{id}")
+    @PreAuthorize("#id == #currentUser.id or #currentUser.isAdministrator == true")
+    // SecurityConfiguration classına  EnableMethodSecurity(prePostEnabled = true) özelliği eklendiğinde
+    // buSatır (PreAuthorize("#id == #currentUser.id or #currentUser.isAdministrator == true")) ile doğrulama yapılıyor.
     UserDTO updateUser(@PathVariable long id, @Valid @RequestBody UserUpdate userUpdate, @AuthenticationPrincipal CurrentUser currentUser) {
-        if (!currentUser.getIsAdministrator() && (currentUser.getId() != id)) {
-            throw new AuthorizationException();
-        }
         return new UserDTO(userService.updateUser(id, userUpdate));
     }
-
 }
