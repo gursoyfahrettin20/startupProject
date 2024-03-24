@@ -1,5 +1,7 @@
 package com.ws.startupProject;
 
+import com.ws.startupProject.configuration.CurrentUser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,6 +24,12 @@ public class StartupProjectApplication {
     CommandLineRunner dummyUserAdd(UserRepository userRepository, PasswordEncoder passwordEncoder) {
 
         return (args) -> {
+
+            var userInDb = userRepository.findByEmail("user1@mail.com");
+            if (userInDb != null) {
+                return;
+            }
+
             for (var i = 1; i <= 25; i++) {
                 User user = new User();
                 user.setUsername("user" + i);

@@ -1,6 +1,10 @@
 package com.ws.startupProject.auth;
 
+import com.ws.startupProject.shared.GenericMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
@@ -16,9 +20,20 @@ public class AuthController {
     AuthService authService;
 
     @PostMapping("/auth")
-    AuthResponse handleAuthantication(@Valid @RequestBody Credentials credentials) {
-       return authService.authenticate(credentials);
+    ResponseEntity<AuthResponse> handleAuthentication(@Valid @RequestBody Credentials creds) {
+        var authResponse = authService.authenticate(creds);
+        var cookie = ResponseCookie.from("fahrettin-token", authResponse.getToken().getToken()).path("/").httpOnly(true).build();
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).body(authResponse);
     }
 
-
+    @PostMapping("/logout")
+    ResponseEntity<GenericMessage> handleLogout(@RequestHeader(name = "Authorization", required = false) String authorizationHeader, @CookieValue(name = "fahrettin-token", required = false) String cookieValue) {
+        var tokenWithPrefix = authorizationHeader;
+        if (cookieValue != null) {
+            tokenWithPrefix = "AnyPrefix " + cookieValue;
+        }
+        authService.logout(tokenWithPrefix);
+        var cookie = ResponseCookie.from("fahrettin-token", "").path("/").maxAge(0).httpOnly(true).build();
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).body(new GenericMessage("Logout success"));
+    }
 }

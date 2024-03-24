@@ -13,6 +13,7 @@ public class WebSiteConfigurationProperties {
     private Client client;
     private Email email;
     private Storage storage = new Storage();
+    private String tokenType;
 
     public static record Email(
             String username,
@@ -36,6 +37,6 @@ public class WebSiteConfigurationProperties {
         String pages = "pages";
         String pdfFile = "pdfFile";
         String wordFile = "wordFile";
-        String exelFile = "exelFile";
+        String excelFile = "excelFile";
     }
 }

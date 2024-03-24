@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
-import java.util.UUID;
 
 @Service
 public class FileService {
@@ -30,7 +30,7 @@ public class FileService {
         String type = detectType(image);
 
         String fileName = userName + "-" + formatDateTime + "." + type.split("/")[1];
-        Path path = Paths.get(properties.getStorage().getRoot(), folderName, fileName);
+        Path path = getProfileImagePath(folderName, fileName);
         try {
             OutputStream outputStream = new FileOutputStream(path.toFile());
             outputStream.write(decodedImage(image));
@@ -93,4 +93,23 @@ public class FileService {
     private byte[] decodedImage(String encodedImage) {
         return Base64.getDecoder().decode(encodedImage.split(",")[1]);
     }
+
+    // eğer kullanıcının profil resmi varsa resmini değiştirmek istediğinde eski resmini silmesini yeni resmini eklemesini sağlıyor
+    public void deleteProfileImage(String folderName, String image) {
+        if (image == null) {
+            return;
+        }
+        Path path = getProfileImagePath(folderName, image);
+        try {
+            Files.deleteIfExists(path);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // Birden fazla yerde kullanıldığı için tekrar tekrar yazılmaması ve kod fazlalığı olmaması açısından extract edildi
+    private Path getProfileImagePath(String folderName, String fileName) {
+        return Paths.get(properties.getStorage().getRoot(), folderName, fileName);
+    }
+
 }

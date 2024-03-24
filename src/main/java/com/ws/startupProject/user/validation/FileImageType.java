@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = FileTypeValidator.class)
 public @interface FileImageType {
-    String message() default "Sadece jpeg ve png formatında yükleme yapınız.";
+    String message() default "Sadece {types} formatında yükleme yapınız.";
 
     Class<?>[] groups() default {};
 

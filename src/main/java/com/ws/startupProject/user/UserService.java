@@ -71,11 +71,18 @@ public class UserService {
 
     // Kullanıcıları Listeler
     public Page<User> getUsers(Pageable page, CurrentUser currentUser) {
-        if (currentUser == null) {
-            return userRepository.findAll(page);
-        }
-        return userRepository.findByIdNot(currentUser.getId(), page);
+        if (currentUser.getIsAdministrator()) {
+            // Listede kendisi kariç tüm kullanıcıları görür
+            return userRepository.findByIdNot(currentUser.getId(), page);
 
+            // Admin yetkisi varsa listede tüm kullanıcıları görür
+            // return userRepository.findAll(page);
+        } else if (currentUser.getIsEnabled()) {
+            // Admin yetkisi yoksa sadece listede kendisini görür
+            return userRepository.findById(currentUser.getId(), page);
+        }
+        // return userRepository.findAll(page);
+        return userRepository.findByIdNot(0, page);
     }
 
     // Kullanıcı varmı diye kontrol eder, yoksa hata mesajı döner.
@@ -93,7 +100,14 @@ public class UserService {
         User inDb = getUser(id);
         inDb.setUsername(userUpdate.username());
         if (userUpdate.image() != null) {
-            String filename = fileService.saveBase64StringAsFile(userUpdate.image(), properties.getStorage().getProfile() , inDb.getUsername());
+            String filename = fileService.saveBase64StringAsFile(userUpdate.image(), properties.getStorage().getProfile(), inDb.getUsername());
+
+            // Kullanıcı resimini güncellediğinde eski resmi silme bloğu başlangıcı
+
+            fileService.deleteProfileImage(properties.getStorage().getProfile(), inDb.getImage());
+
+            // Kullanıcı resimini güncellediğinde eski resmi silme bloğu sonu
+
             inDb.setImage(filename);
         }
         return userRepository.save(inDb);

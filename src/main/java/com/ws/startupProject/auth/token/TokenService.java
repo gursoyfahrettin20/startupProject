@@ -4,7 +4,11 @@ import com.ws.startupProject.auth.dto.Credentials;
 import com.ws.startupProject.user.User;
 
 public interface TokenService {
-    
-    public Token CreateToken(User user, Credentials credentials);
-    public User VerifyToken(String AuthorizationHeader);
+
+    public Token createToken(User user, Credentials credentials);
+
+    public User verifyToken(String AuthorizationHeader);
+
+    public void logout(String authorizationHeader);
+
 }

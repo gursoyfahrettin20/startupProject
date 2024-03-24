@@ -33,11 +33,14 @@ public class AuthService {
         if (!passwordEncoder.matches(creds.password(), inDb.getPassword())) {
             throw new AuthenticationExcepion();
         }
-        Token token = tokenService.CreateToken(inDb, creds);
-
+        Token token = tokenService.createToken(inDb, creds);
         AuthResponse authResponse = new AuthResponse();
         authResponse.setToken(token);
         authResponse.setUser(new UserDTO(inDb));
         return authResponse;
+    }
+
+    public void logout(String authorizationHeader) {
+        tokenService.logout(authorizationHeader);
     }
 }

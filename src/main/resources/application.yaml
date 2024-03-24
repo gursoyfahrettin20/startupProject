@@ -9,8 +9,9 @@ spring:
   web:
     locale: en
   datasource:
-    url: jdbc:h2:./devdb;Auto_server=TRUE
+    url: jdbc:h2:file:./devdb;Auto_server=TRUE
     username: sa
+    password:
   jpa:
     properties:
       javax:
@@ -18,9 +19,10 @@ spring:
           validation:
             mode: none
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
 
 websiteconfiguration:
+  token-type: OpaqueTokenService
   email:
     username: kieran.herman15@ethereal.email
     password: ${PROJECT_EMAIL_PASSWORD}
@@ -37,6 +39,7 @@ spring:
 websiteconfiguration:
   client:
     host: http://www.fahrettingursoy.com
+
 ---
 spring:
   config:
@@ -45,7 +48,6 @@ spring:
 websiteconfiguration:
   client:
     host: http://localhost:3434
-
 
     # Console bölümünde hata mesajlarınu loglayarak gösterim sağlar
 logging:

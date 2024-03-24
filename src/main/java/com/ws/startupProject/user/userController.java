@@ -39,8 +39,7 @@ public class userController {
     @PatchMapping("/users/{token}/active")
     GenericMessage activateUser(@PathVariable String token) {
         userService.activateUser(token);
-        String message = Messages.getMessageForLocale("website.messages.activate.user.success",
-                LocaleContextHolder.getLocale());
+        String message = Messages.getMessageForLocale("website.messages.activate.user.success", LocaleContextHolder.getLocale());
         return new GenericMessage(message);
     }
 

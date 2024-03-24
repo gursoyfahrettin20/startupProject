@@ -40,7 +40,7 @@ public class StaticResourceConfiguration implements WebMvcConfigurer {
             createFolder(Paths.get(properties.getStorage().getRoot(), properties.getStorage().getAbout()));
             createFolder(Paths.get(properties.getStorage().getRoot(), properties.getStorage().getPages()));
             createFolder(Paths.get(properties.getStorage().getRoot(), properties.getStorage().getProduct()));
-            createFolder(Paths.get(properties.getStorage().getRoot(), properties.getStorage().getExelFile()));
+            createFolder(Paths.get(properties.getStorage().getRoot(), properties.getStorage().getExcelFile()));
             createFolder(Paths.get(properties.getStorage().getRoot(), properties.getStorage().getPdfFile()));
             createFolder(Paths.get(properties.getStorage().getRoot(), properties.getStorage().getWordFile()));
         };
