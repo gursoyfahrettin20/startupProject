@@ -112,4 +112,8 @@ public class UserService {
         }
         return userRepository.save(inDb);
     }
+
+    public void deleteUser(long id) {
+        userRepository.deleteById(id);
+    }
 }

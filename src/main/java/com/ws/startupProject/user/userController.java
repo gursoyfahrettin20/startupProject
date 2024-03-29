@@ -55,12 +55,24 @@ public class userController {
         return new UserDTO(userService.getUser(id));
     }
 
-    // Yetkilendirme bölgesi
+    // User Update
     @PutMapping("/users/{id}")
     @PreAuthorize("#id == #currentUser.id or #currentUser.isAdministrator == true")
     // SecurityConfiguration classına  EnableMethodSecurity(prePostEnabled = true) özelliği eklendiğinde
-    // buSatır (PreAuthorize("#id == #currentUser.id or #currentUser.isAdministrator == true")) ile doğrulama yapılıyor.
+    // Busatır (PreAuthorize("#id == #currentUser.id or #currentUser.isAdministrator == true")) ile doğrulama yapılıyor.
     UserDTO updateUser(@PathVariable long id, @Valid @RequestBody UserUpdate userUpdate, @AuthenticationPrincipal CurrentUser currentUser) {
         return new UserDTO(userService.updateUser(id, userUpdate));
+    }
+
+    // User Delete
+    @DeleteMapping("/users/{id}")
+    @PreAuthorize("#id == #currentUser.id or #currentUser.isAdministrator == true")
+    GenericMessage deleteUser(@PathVariable long id, @AuthenticationPrincipal CurrentUser currentUser) {
+        GenericMessage message = new GenericMessage("Sitenin Yöneticisi Silinemez.");
+        if (!currentUser.getIsAdministrator() && id != currentUser.getId()) {
+            userService.deleteUser(id);
+            message = new GenericMessage("User is Delete");
+        }
+        return message;
     }
 }
