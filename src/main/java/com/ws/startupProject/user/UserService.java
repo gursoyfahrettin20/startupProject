@@ -2,9 +2,12 @@ package com.ws.startupProject.user;
 
 import java.util.UUID;
 
+import com.ws.startupProject.auth.token.TokenRepository;
 import com.ws.startupProject.configuration.CurrentUser;
 import com.ws.startupProject.configuration.WebSiteConfigurationProperties;
 import com.ws.startupProject.file.FileService;
+import com.ws.startupProject.user.dto.PasswordResetRequest;
+import com.ws.startupProject.user.dto.PasswordUpdate;
 import com.ws.startupProject.user.dto.UserUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -39,6 +42,9 @@ public class UserService {
     @Autowired
     WebSiteConfigurationProperties properties;
 
+    @Autowired
+    TokenRepository tokenRepository;
+
     // @Transactional dataların depended olan başka şeyler varsa ve onları
     // oluştururken bir hata oluşursa
     // db ye kaydetmeyi önleyen bir class dır.
@@ -71,15 +77,16 @@ public class UserService {
 
     // Kullanıcıları Listeler
     public Page<User> getUsers(Pageable page, CurrentUser currentUser) {
-        if (currentUser.getIsAdministrator()) {
-            // Listede kendisi kariç tüm kullanıcıları görür
-            return userRepository.findByIdNot(currentUser.getId(), page);
-
-            // Admin yetkisi varsa listede tüm kullanıcıları görür
-            // return userRepository.findAll(page);
-        } else if (currentUser.getIsEnabled()) {
-            // Admin yetkisi yoksa sadece listede kendisini görür
-            return userRepository.findById(currentUser.getId(), page);
+        if (currentUser != null) {
+            if (currentUser.getIsAdministrator()) {
+                // Listede kendisi kariç tüm kullanıcıları görür
+                return userRepository.findByIdNot(currentUser.getId(), page);
+                // Admin yetkisi varsa listede tüm kullanıcıları görür
+                // return userRepository.findAll(page);
+            } else if (currentUser.getIsEnabled()) {
+                // Admin yetkisi yoksa sadece listede kendisini görür
+                return userRepository.findById(currentUser.getId(), page);
+            }
         }
         // return userRepository.findAll(page);
         return userRepository.findByIdNot(0, page);
@@ -113,7 +120,36 @@ public class UserService {
         return userRepository.save(inDb);
     }
 
+    // user silme işlemlerini yapar
     public void deleteUser(long id) {
-        userRepository.deleteById(id);
+        User inDb = getUser(id);
+        if (inDb.getImage() != null) {
+            fileService.deleteProfileImage(properties.getStorage().getProfile(), inDb.getImage());
+        }
+        userRepository.delete(inDb);
+    }
+
+
+    // password reset işlemleri
+    public void handleResetRequest(PasswordResetRequest passwordResetRequest) {
+        User inDb = finByEmail(passwordResetRequest.email());
+        if (inDb == null) {
+            throw new NotFoundException(0);
+        }
+        inDb.setPasswordResetToken(UUID.randomUUID().toString());
+        this.userRepository.save(inDb);
+        this.emailService.sendPasswordResetEmail(inDb.getEmail(), inDb.getPasswordResetToken());
+    }
+
+    public void updatePassword(String token, PasswordUpdate passwordUpdate) {
+        User inDb = userRepository.findByPasswordResetToken(token);
+        if (inDb == null) {
+            throw new InvalidTokenException();
+        }
+        inDb.setPasswordResetToken(null);
+        inDb.setPassword(passwordEncoder.encode(passwordUpdate.password()));
+        inDb.setActive(true);
+        inDb.setActivationToken(null);
+        userRepository.save(inDb);
     }
 }

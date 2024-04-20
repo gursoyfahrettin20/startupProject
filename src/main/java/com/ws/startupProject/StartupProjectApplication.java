@@ -7,11 +7,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.ws.startupProject.user.User;
 import com.ws.startupProject.user.UserRepository;
 
+@EnableJpaRepositories
 @SpringBootApplication
 public class StartupProjectApplication {
 
@@ -30,7 +32,7 @@ public class StartupProjectApplication {
                 return;
             }
 
-            for (var i = 1; i <= 25; i++) {
+            for (var i = 1; i <= 50; i++) {
                 User user = new User();
                 user.setUsername("user" + i);
                 user.setEmail("user" + i + "@mail.com");

@@ -47,6 +47,7 @@ public class EmailService {
             </html>
                         """;
 
+    // User aktivasyon emaili atma işlemi
     public void userSendActivationEmail(String email, String activationToken) {
         var activationUrl = properties.getClient().host() + "/activation/" + activationToken;
         var title = messageSource.getMessage("website.mail.user.create.title", null, LocaleContextHolder.getLocale());
@@ -65,6 +66,25 @@ public class EmailService {
             mailMessage.setTo(email);
             mailMessage.setSubject(title);
             mailMessage.setText(mailBody, true);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+        this.mailSenderImpl.send(mimeMessage);
+    }
+
+    // password resetlendikten sonra email atma işlemi
+    public void sendPasswordResetEmail(String email, String passwordResetToken) {
+        String passwordResetUrl = properties.getClient().host() + "/password-rest/set?tk=" + passwordResetToken;
+        MimeMessage mimeMessage = mailSenderImpl.createMimeMessage();
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, "UTF-8");
+        var Title = "Reset Your Password";
+        var ClickHere = messageSource.getMessage("website.mail.user.reset.clickHere", null, LocaleContextHolder.getLocale());
+        var MailBody = ActivationEmailThemplateForHtml.replace("${url}", passwordResetUrl).replace("${title}", Title).replace("${clickHere}", ClickHere);
+        try {
+            mimeMessageHelper.setFrom(properties.getEmail().from());
+            mimeMessageHelper.setTo(email);
+            mimeMessageHelper.setSubject(Title);
+            mimeMessageHelper.setText(MailBody, true);
         } catch (MessagingException e) {
             e.printStackTrace();
         }

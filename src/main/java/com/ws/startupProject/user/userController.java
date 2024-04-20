@@ -3,10 +3,8 @@ package com.ws.startupProject.user;
 import com.ws.startupProject.configuration.CurrentUser;
 import com.ws.startupProject.shared.GenericMessage;
 import com.ws.startupProject.shared.Messages;
-import com.ws.startupProject.user.dto.UserCreate;
-import com.ws.startupProject.user.dto.UserDTO;
+import com.ws.startupProject.user.dto.*;
 
-import com.ws.startupProject.user.dto.UserUpdate;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,10 +67,27 @@ public class userController {
     @PreAuthorize("#id == #currentUser.id or #currentUser.isAdministrator == true")
     GenericMessage deleteUser(@PathVariable long id, @AuthenticationPrincipal CurrentUser currentUser) {
         GenericMessage message = new GenericMessage("Sitenin Yöneticisi Silinemez.");
-        if (!currentUser.getIsAdministrator() && id != currentUser.getId()) {
-            userService.deleteUser(id);
-            message = new GenericMessage("User is Delete");
+        if (currentUser.getIsAdministrator() && id == currentUser.getId()) {
+            return message;
         }
+        userService.deleteUser(id);
+        message = new GenericMessage("User is Delete");
         return message;
+
+    }
+
+    // User Password Reset
+    @PostMapping("/users/password-reset")
+    GenericMessage passwordResetRequest(@Valid @RequestBody PasswordResetRequest passwordResetRequest) {
+        userService.handleResetRequest(passwordResetRequest);
+        return new GenericMessage("Check your email address to reset your Password");
+    }
+
+    // User Password Reset işleminden sonra user ın metodunu update etme metodu
+    @PatchMapping("/users/{token}/password")
+    GenericMessage setPassword(@PathVariable String token, @Valid @RequestBody PasswordUpdate passwordUpdate) {
+        userService.updatePassword(token, passwordUpdate);
+        return new GenericMessage("Password Update successfully");
+
     }
 }

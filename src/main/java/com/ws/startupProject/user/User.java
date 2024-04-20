@@ -25,6 +25,8 @@ public class User {
 
     String activationToken;
 
+    String passwordResetToken;
+
     @Lob
     String image;
 

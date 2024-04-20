@@ -1,6 +1,7 @@
 server:
   port: 5555
 
+
 spring:
   main:
     allow-circular-references: true
@@ -50,9 +51,9 @@ websiteconfiguration:
     host: http://localhost:3434
 
     # Console bölümünde hata mesajlarınu loglayarak gösterim sağlar
-logging:
-  level:
-    ROOT: ERROR
+#logging:
+#  level:
+#    ROOT: ERROR
 #    DEBUG
 #    ERROR
 #    FATAL
