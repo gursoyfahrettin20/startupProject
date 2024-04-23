@@ -73,7 +73,6 @@ public class userController {
         userService.deleteUser(id);
         message = new GenericMessage("User is Delete");
         return message;
-
     }
 
     // User Password Reset

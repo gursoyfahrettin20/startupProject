@@ -10,7 +10,7 @@ import jakarta.validation.constraints.Size;
 
 public record UserCreate(
         @NotBlank(message = "{startupProject.constraint.notNull}") // java tarafında dil(tr-en) dosyası kullanım örneği içindir.
-        @Size(min = 4, max = 255) 
+        @Size(min = 4, max = 255)
         String username,
 
         @NotBlank 
