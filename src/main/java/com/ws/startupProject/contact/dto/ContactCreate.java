@@ -12,15 +12,20 @@ public record ContactCreate(
         @Size(min = 1, max = 255)
         String address,
 
-        @Size(min = 1, max = 13)
+        @Size(min = 0, max = 13)
         String mobilNumber,
 
         @Size(min = 1, max = 13)
         String branchNumber,
 
         @NotBlank(message = "{website.contact.messages.notnull}")
-        @Size(min = 1, max = 13)
-        String mail
+        @Size(min = 1, max = 50)
+        String mail,
+
+
+        @Size(max = 500)
+        String maps
+
 ) {
     public Contact toContact() {
         Contact contact = new Contact();
@@ -29,6 +34,7 @@ public record ContactCreate(
         contact.setMobilNumber(mobilNumber);
         contact.setBranchNumber(branchNumber);
         contact.setMail(mail);
+        contact.setMaps(maps);
         return contact;
     }
 }

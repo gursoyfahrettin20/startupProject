@@ -1,4 +1,4 @@
-package com.ws.startupProject.contact;
+package com.ws.startupProject.ourWeb;
 
 import com.ws.startupProject.configuration.CurrentUser;
 import com.ws.startupProject.shared.Messages;
@@ -10,20 +10,20 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ContactService {
+public class OurWebService {
 
     @Autowired
-    ContactRepository repository;
+    OurWebRepository repository;
 
     // İlitişim Bilgileri varmı diye kontrol eder, yoksa hata mesajı döner.
-    public Contact getContact(Long id) {
+    public OurWeb getOurWeb(Long id) {
         return repository.findById(id).orElseThrow(() -> new NotFoundExceptionContact(id));
     }
 
     //    kaydedilmesi
-    public void save(Contact contact, CurrentUser currentUser) {
+    public void save(OurWeb ourWeb, CurrentUser currentUser) {
         if (currentUser != null) {
-            repository.save(contact);
+            repository.save(ourWeb);
         } else {
             String message = Messages.getMessageForLocale("website.contact.messages.notFoundUser", LocaleContextHolder.getLocale());
             throw new ExceptionInInitializerError(message);
@@ -31,28 +31,23 @@ public class ContactService {
     }
 
     //    listeleme alanı
-    public List<Contact> getContact() {
+    public List<OurWeb> getOurWeb() {
         return repository.findAll();
     }
 
     //    silinmesi
-    public void deleteContact(long id) {
-        Contact inDb = getContact(id);
+    public void deleteOurWeb(long id) {
+        OurWeb inDb = getOurWeb(id);
         if (inDb != null) {
             repository.delete(inDb);
         }
     }
 
     // güncellenmesi
-    public Object update(Contact contact) {
-        Contact inDb = getContact(contact.id);
+    public Object update(OurWeb ourWeb) {
+        OurWeb inDb = getOurWeb(ourWeb.id);
         if (inDb != null) {
-            inDb.setBranchName(contact.branchName);
-            inDb.setAddress(contact.address);
-            inDb.setMobilNumber(contact.mobilNumber);
-            inDb.setBranchNumber(contact.branchNumber);
-            inDb.setMail(contact.mail);
-            inDb.setMaps(contact.maps);
+            inDb.setDetail(ourWeb.detail);
         }
         return repository.save(inDb);
     }

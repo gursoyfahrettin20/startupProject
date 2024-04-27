@@ -3,10 +3,8 @@ package com.ws.startupProject.contact;
 import com.ws.startupProject.configuration.CurrentUser;
 import com.ws.startupProject.contact.dto.ContactCreate;
 import com.ws.startupProject.shared.GenericMessage;
-import com.ws.startupProject.shared.Messages;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,7 +48,9 @@ public class ContactController {
 
     // iletişim bilgileinin güncellenmesi
     @PutMapping("/contact/{id}")
-    GenericMessage updateContact(@PathVariable long id, @Valid @RequestBody Contact contact, @AuthenticationPrincipal CurrentUser currentUser) {
+    GenericMessage updateContact(@PathVariable long id, @Valid @RequestBody Contact contact, String ourId, @AuthenticationPrincipal CurrentUser currentUser) {
+
+//        ourId yi alarak Arry da o sırayı güncelleme işlemi
         GenericMessage message = new GenericMessage("Sitenin Yöneticisi Değilsiniz.");
         if (currentUser.getIsAdministrator() && id == currentUser.getId()) {
             contactService.update(contact);

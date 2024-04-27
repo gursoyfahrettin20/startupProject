@@ -22,4 +22,5 @@ public class Contact {
 
     String mail;
 
+    String maps;
 }

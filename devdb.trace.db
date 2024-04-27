@@ -1,0 +1,12 @@
+2024-04-27 20:00:20.262287+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "DETAIL CHARACTER VARYING(255)": "U&'<p><strong style=""font-family: Impact, Charcoal, sans-serif; font-size: 60px;... (316)"; SQL statement:
+update our_web set detail=?,image=?,name=? where id=? [22001-224]
+2024-04-27 20:09:05.434584+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "DETAIL CHARACTER VARYING(255)": "'<p><span style=""font-family: Arial, Helvetica, sans-serif; font-size: 60px;"">as... (304)"; SQL statement:
+update our_web set detail=?,image=?,name=? where id=? [22001-224]
+2024-04-27 20:09:24.976289+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "DETAIL CHARACTER VARYING(255)": "'<p><span style=""font-family: Arial, Helvetica, sans-serif; font-size: 60px;"">as... (300)"; SQL statement:
+update our_web set detail=?,image=?,name=? where id=? [22001-224]
+2024-04-27 20:15:27.874960+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "DETAIL CHARACTER VARYING(255)": "'<p><span style=""font-family: Arial, Helvetica, sans-serif; font-size: 60px;"">as... (300)"; SQL statement:
+update our_web set detail=?,image=?,name=? where id=? [22001-224]
