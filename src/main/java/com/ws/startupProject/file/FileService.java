@@ -41,6 +41,69 @@ public class FileService {
         }
     }
 
+    public String detectType(String value) {
+        return tika.detect(decodedImage(value));
+    }
+
+    private byte[] decodedImage(String encodedImage) {
+        return Base64.getDecoder().decode(encodedImage.split(",")[1]);
+    }
+
+    // eğer kullanıcının profil resmi varsa resmini değiştirmek istediğinde eski resmini silmesini yeni resmini eklemesini sağlıyor
+    public void deleteProfileImage(String folderName, String image) {
+        if (image == null) {
+            return;
+        }
+        Path path = getProfileImagePath(folderName, image);
+        try {
+            Files.deleteIfExists(path);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // Birden fazla yerde kullanıldığı için tekrar tekrar yazılmaması ve kod fazlalığı olmaması açısından extract edildi
+    private Path getProfileImagePath(String folderName, String fileName) {
+        return Paths.get(properties.getStorage().getRoot(), folderName, fileName);
+    }
+
+    //    Kategori resimlerininin kayıt yeri
+    public String saveBase64StringAsFileCategories(String image, String folderName, String categoryName) {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm-ss");
+        String formatDateTime = now.format(formatter);
+        String type = detectType(image);
+
+        String fileName = categoryName + "-" + formatDateTime + "." + type.split("/")[1];
+        Path path = getCategoryImagePath(folderName, fileName);
+        try {
+            OutputStream outputStream = new FileOutputStream(path.toFile());
+            outputStream.write(decodedImage(image));
+            outputStream.close();
+            return fileName;
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    // eğer kategori resmi varsa resmini değiştirmek istediğinde eski resmini silmesini yeni resmini eklemesini sağlıyor
+    public void deleteCategoryImage(String folderName, String image) {
+        if (image == null) {
+            return;
+        }
+        Path path = getCategoryImagePath(folderName, image);
+        try {
+            Files.deleteIfExists(path);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // Birden fazla yerde kullanıldığı için tekrar tekrar yazılmaması ve kod fazlalığı olmaması açısından extract edildi
+    private Path getCategoryImagePath(String folderName, String fileName) {
+        return Paths.get(properties.getStorage().getRoot(), folderName, fileName);
+    }
+
     public String saveWordAsFile(String image, String folderName, String userName) {
         String wordFileName = userName;
         File file = new File(userName);
@@ -86,30 +149,5 @@ public class FileService {
         }
     }
 
-    public String detectType(String value) {
-        return tika.detect(decodedImage(value));
-    }
-
-    private byte[] decodedImage(String encodedImage) {
-        return Base64.getDecoder().decode(encodedImage.split(",")[1]);
-    }
-
-    // eğer kullanıcının profil resmi varsa resmini değiştirmek istediğinde eski resmini silmesini yeni resmini eklemesini sağlıyor
-    public void deleteProfileImage(String folderName, String image) {
-        if (image == null) {
-            return;
-        }
-        Path path = getProfileImagePath(folderName, image);
-        try {
-            Files.deleteIfExists(path);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    // Birden fazla yerde kullanıldığı için tekrar tekrar yazılmaması ve kod fazlalığı olmaması açısından extract edildi
-    private Path getProfileImagePath(String folderName, String fileName) {
-        return Paths.get(properties.getStorage().getRoot(), folderName, fileName);
-    }
 
 }

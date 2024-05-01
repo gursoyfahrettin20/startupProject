@@ -5,10 +5,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public record OurWebCreate(
-//        @NotBlank(message = "{website.contact.messages.notnull}")
+//        @NotBlank(message = "Boş Olamaz")
 //        @Size(min = 1, max = 100)
         String name,
-        @NotBlank(message = "{website.contact.messages.notnull}")
+        @NotBlank(message = "Boş Olamaz")
         @Size(min = 1, max = 10000)
         String detail,
         String image

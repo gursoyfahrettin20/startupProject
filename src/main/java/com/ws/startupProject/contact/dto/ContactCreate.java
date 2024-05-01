@@ -22,8 +22,7 @@ public record ContactCreate(
         @Size(min = 1, max = 50)
         String mail,
 
-
-        @Size(max = 500)
+        @Size(max = 800)
         String maps
 
 ) {

@@ -48,7 +48,7 @@ public class ContactController {
 
     // iletişim bilgileinin güncellenmesi
     @PutMapping("/contact/{id}")
-    GenericMessage updateContact(@PathVariable long id, @Valid @RequestBody Contact contact, String ourId, @AuthenticationPrincipal CurrentUser currentUser) {
+    GenericMessage updateContact(@PathVariable long id, @Valid @RequestBody Contact contact, @AuthenticationPrincipal CurrentUser currentUser, String ourId) {
 
 //        ourId yi alarak Arry da o sırayı güncelleme işlemi
         GenericMessage message = new GenericMessage("Sitenin Yöneticisi Değilsiniz.");

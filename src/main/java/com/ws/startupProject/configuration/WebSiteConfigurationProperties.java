@@ -32,6 +32,7 @@ public class WebSiteConfigurationProperties {
         String profile = "profile";
         String slider = "slider";
         String product = "product";
+        String category = "category";
         String about = "about";
         String news = "news";
         String pages = "pages";
