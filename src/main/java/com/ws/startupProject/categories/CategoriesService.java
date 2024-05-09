@@ -25,7 +25,7 @@ public class CategoriesService {
 
 
     // İlitişim Bilgileri varmı diye kontrol eder, yoksa hata mesajı döner.
-    public Categories getCategories(String id) {
+    public Categories getCategory(String id) {
         return repository.findById(id).orElseThrow(() -> new NotFoundExceptionCategories(id));
     }
 
@@ -50,18 +50,16 @@ public class CategoriesService {
 
     // Kategorilerin silinmesi
     public void deleteCategories(String id) {
-        Categories inDb = getCategories(id);
+        Categories inDb = getCategory(id);
         if (inDb != null) {
             fileService.deleteCategoryImage(properties.getStorage().getCategory(), inDb.getImage());
-            //  buraya kategori altında bir veya birden yazla ürün varsa silinmeyecek kuralı eklenmesi gerekiyor.
-
             repository.delete(inDb);
         }
     }
 
     // Kategorilerin güncellenmesi
     public Object updateCategories(Categories categories) {
-        Categories inDb = getCategories(categories.id);
+        Categories inDb = getCategory(categories.id);
         if (inDb != null) {
             if (categories.getImage() != null) {
                 // Yeni resim ekleme bloğu

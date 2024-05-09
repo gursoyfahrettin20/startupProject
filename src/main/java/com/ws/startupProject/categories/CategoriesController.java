@@ -29,13 +29,13 @@ public class CategoriesController {
         return message;
     }
 
-    //    Kategorileri bilgilerinin listelenmesi
+    // Kategorileri bilgilerinin listelenmesi
     @GetMapping("/categories")
     public List<Categories> getCategories() {
         return categoriesService.getCategories();
     }
 
-    //    Kategorileri bilgilerinin silinmesi
+    // Kategorileri bilgilerinin silinmesi
     @DeleteMapping("/categories/{id}")
     GenericMessage deleteCategories(@PathVariable String id, @AuthenticationPrincipal CurrentUser currentUser) {
         GenericMessage message = new GenericMessage("Sitenin Yöneticisi Değilsiniz.");
@@ -46,7 +46,7 @@ public class CategoriesController {
         return message;
     }
 
-    // iletişim bilgileinin güncellenmesi
+    // Kategori bilgileinin güncellenmesi
     @PutMapping("/categories")
     GenericMessage updateCategories(@Valid @RequestBody Categories categories, @AuthenticationPrincipal CurrentUser currentUser) {
         GenericMessage message = new GenericMessage("Sitenin Yöneticisi Değilsiniz.");

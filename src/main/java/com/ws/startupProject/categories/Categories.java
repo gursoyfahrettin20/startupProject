@@ -1,7 +1,10 @@
 package com.ws.startupProject.categories;
 
+import com.ws.startupProject.products.Products;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 @Entity
@@ -19,5 +22,7 @@ public class Categories {
 
     String detail;
 
+    @OneToMany(mappedBy = "categories", cascade = CascadeType.REMOVE)
+    List<Products> products;
 
 }

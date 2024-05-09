@@ -85,6 +85,24 @@ public class FileService {
             return null;
         }
     }
+    //    Kategori resimlerininin kayıt yeri
+    public String saveBase64StringAsFileProductToImages(String image, String folderName,String productName) {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm-ss");
+        String formatDateTime = now.format(formatter);
+        String type = detectType(image);
+
+        String fileName = productName + "_" + formatDateTime + "." + type.split("/")[1];
+        Path path = getCategoryImagePath(folderName, fileName);
+        try {
+            OutputStream outputStream = new FileOutputStream(path.toFile());
+            outputStream.write(decodedImage(image));
+            outputStream.close();
+            return fileName;
+        } catch (IOException e) {
+            return null;
+        }
+    }
 
     // eğer kategori resmi varsa resmini değiştirmek istediğinde eski resmini silmesini yeni resmini eklemesini sağlıyor
     public void deleteCategoryImage(String folderName, String image) {
