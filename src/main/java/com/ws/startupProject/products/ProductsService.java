@@ -1,15 +1,14 @@
 package com.ws.startupProject.products;
 
 import com.ws.startupProject.configuration.CurrentUser;
-import com.ws.startupProject.productToImages.ProductToImages;
 import com.ws.startupProject.productToImages.ProductToImagesRepository;
 import com.ws.startupProject.shared.Messages;
 import com.ws.startupProject.user.exception.NotFoundExceptionProducts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class ProductsService {
@@ -36,8 +35,13 @@ public class ProductsService {
     }
 
     // Ürünlerin listeleme alanı
-    public List<Products> getProducts() {
-        return repository.findAll();
+    public Page<Products> getProducts(Pageable page, CurrentUser currentUser) {
+        if (currentUser != null) {
+            if (currentUser.getIsAdministrator()) {
+                return repository.findAll(page);
+            }
+        }
+        return null;
     }
 
     // Ürünlerin silinmesi

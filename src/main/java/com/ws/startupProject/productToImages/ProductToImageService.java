@@ -44,14 +44,15 @@ public class ProductToImageService {
     }
 
     // Ürün fotoğraflarının listeleme alanı
-    public List<ProductToImages> getProducts() {
-        return repository.findAll();
+    public List<ProductToImages> getProductImagesList(String id) {
+        return repository.findByProductsId(id);
     }
 
     // Ürün fotoğraflarının silinmesi
     public void deleteProductToImage(String id) {
         ProductToImages inDb = getProductToImage(id);
         if (inDb != null) {
+            fileService.deleteProfileImage(properties.getStorage().getProduct(), inDb.getImage());
             repository.delete(inDb);
         }
     }

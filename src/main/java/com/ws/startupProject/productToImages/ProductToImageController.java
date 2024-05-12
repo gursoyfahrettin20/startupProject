@@ -19,7 +19,6 @@ public class ProductToImageController {
     ProductToImageService service;
 
     // Ürünlerin resimlerinin kaydedilmesi
-
     @PostMapping("/newProductToImage")
     GenericMessage createProductToImages(@Valid @RequestBody ProductToImagesCreate[] productToImagesCreate, @AuthenticationPrincipal CurrentUser currentUser) {
         GenericMessage message = new GenericMessage("Siteye Giriş yapmadınız.");
@@ -32,14 +31,17 @@ public class ProductToImageController {
         return message;
     }
 
-    // Ürün bilgilerinin listelenmesi
-    @GetMapping("/productToImage")
-    public List<ProductToImages> getProduct() {
-        return service.getProducts();
+    // Ürün resimlerinin listelenmesi
+    @GetMapping("/productToImage/{id}")
+    public List<ProductToImages> getProduct(@PathVariable String id, @AuthenticationPrincipal CurrentUser currentUser) {
+        if (currentUser.getIsAdministrator()) {
+            return service.getProductImagesList(id);
+        }
+        return null;
     }
 
 
-    // Ürün bilgilerinin silinmesi
+    // Ürün resimlerinin silinmesi
     @DeleteMapping("/productToImage/{id}")
     GenericMessage deleteProductToImages(@PathVariable String id, @AuthenticationPrincipal CurrentUser currentUser) {
         GenericMessage message = new GenericMessage("Sitenin Yöneticisi Değilsiniz.");
@@ -51,12 +53,14 @@ public class ProductToImageController {
     }
 
 
-    // Ürün bilgileinin güncellenmesi
+    // Ürün resimlerinin güncellenmesi
     @PutMapping("/productToImage")
-    GenericMessage updateProductToImages(@Valid @RequestBody ProductToImages productToImages, @AuthenticationPrincipal CurrentUser currentUser) {
+    GenericMessage updateProductToImages(@Valid @RequestBody ProductToImagesCreate[] productToImagesCreate, @AuthenticationPrincipal CurrentUser currentUser) {
         GenericMessage message = new GenericMessage("Sitenin Yöneticisi Değilsiniz.");
         if (currentUser.getIsAdministrator()) {
-            service.updateProductToImages(productToImages);
+            for (ProductToImagesCreate toImages : productToImagesCreate) {
+                service.updateProductToImages(toImages.toProductToImages());
+            }
             message = new GenericMessage("Product to image is Update");
         }
         return message;

@@ -1,16 +1,15 @@
 package com.ws.startupProject.products;
 
-import com.ws.startupProject.categories.dto.CategoriesCreate;
 import com.ws.startupProject.configuration.CurrentUser;
-import com.ws.startupProject.productToImages.dto.ProductToImagesCreate;
+import com.ws.startupProject.products.dto.ProductDto;
 import com.ws.startupProject.products.dto.ProductsCreate;
 import com.ws.startupProject.shared.GenericMessage;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RequestMapping("api/v1")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -33,8 +32,8 @@ public class ProductsController {
 
     // Ürün bilgilerinin listelenmesi
     @GetMapping("/products")
-    public List<Products> getProducts() {
-        return service.getProducts();
+    public Page<ProductDto> getProducts(Pageable page, @AuthenticationPrincipal CurrentUser currentUser) {
+        return service.getProducts(page, currentUser).map(ProductDto::new);
     }
 
 

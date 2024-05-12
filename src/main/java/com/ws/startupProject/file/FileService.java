@@ -5,7 +5,10 @@ import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -75,7 +78,7 @@ public class FileService {
         String type = detectType(image);
 
         String fileName = categoryName + "-" + formatDateTime + "." + type.split("/")[1];
-        Path path = getCategoryImagePath(folderName, fileName);
+        Path path = getImagePath(folderName, fileName);
         try {
             OutputStream outputStream = new FileOutputStream(path.toFile());
             outputStream.write(decodedImage(image));
@@ -85,7 +88,8 @@ public class FileService {
             return null;
         }
     }
-    //    Kategori resimlerininin kayıt yeri
+
+    //    Ürün resimlerininin kayıt yeri
     public String saveBase64StringAsFileProductToImages(String image, String folderName,String productName) {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm-ss");
@@ -93,7 +97,7 @@ public class FileService {
         String type = detectType(image);
 
         String fileName = productName + "_" + formatDateTime + "." + type.split("/")[1];
-        Path path = getCategoryImagePath(folderName, fileName);
+        Path path = getImagePath(folderName, fileName);
         try {
             OutputStream outputStream = new FileOutputStream(path.toFile());
             outputStream.write(decodedImage(image));
@@ -109,7 +113,7 @@ public class FileService {
         if (image == null) {
             return;
         }
-        Path path = getCategoryImagePath(folderName, image);
+        Path path = getImagePath(folderName, image);
         try {
             Files.deleteIfExists(path);
         } catch (IOException e) {
@@ -118,7 +122,7 @@ public class FileService {
     }
 
     // Birden fazla yerde kullanıldığı için tekrar tekrar yazılmaması ve kod fazlalığı olmaması açısından extract edildi
-    private Path getCategoryImagePath(String folderName, String fileName) {
+    private Path getImagePath(String folderName, String fileName) {
         return Paths.get(properties.getStorage().getRoot(), folderName, fileName);
     }
 

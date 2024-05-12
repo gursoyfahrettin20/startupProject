@@ -18,6 +18,7 @@ public class ProductToImages {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name ="product_id")
+    @JoinColumn(name ="productId")
     Products products;
+
 }
