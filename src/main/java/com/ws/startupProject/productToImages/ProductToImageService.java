@@ -33,7 +33,7 @@ public class ProductToImageService {
     public void saveProductToImage(ProductToImages productToImages, CurrentUser currentUser) {
         if (currentUser != null) {
             if (productToImages.getImage() != null) {
-                String filename = fileService.saveBase64StringAsFileProductToImages(productToImages.getImage(), properties.getStorage().getProduct(),productToImages.products.getName());
+                String filename = fileService.saveBase64StringAsFile(productToImages.getImage(), properties.getStorage().getProduct(), productToImages.products.getName());
                 productToImages.setImage(filename);
             }
             repository.save(productToImages);
@@ -52,7 +52,7 @@ public class ProductToImageService {
     public void deleteProductToImage(String id) {
         ProductToImages inDb = getProductToImage(id);
         if (inDb != null) {
-            fileService.deleteProfileImage(properties.getStorage().getProduct(), inDb.getImage());
+            fileService.deleteImageFolder(properties.getStorage().getProduct(), inDb.getImage());
             repository.delete(inDb);
         }
     }

@@ -33,7 +33,7 @@ public class CategoriesService {
     public void saveCategories(Categories categories, CurrentUser currentUser) {
         if (currentUser != null) {
             if (categories.getImage() != null) {
-                String filename = fileService.saveBase64StringAsFileCategories(categories.getImage(), properties.getStorage().getCategory(), categories.getName());
+                String filename = fileService.saveBase64StringAsFile(categories.getImage(), properties.getStorage().getCategory(), categories.getName());
                 categories.setImage(filename);
             }
             repository.save(categories);
@@ -52,7 +52,7 @@ public class CategoriesService {
     public void deleteCategories(String id) {
         Categories inDb = getCategory(id);
         if (inDb != null) {
-            fileService.deleteCategoryImage(properties.getStorage().getCategory(), inDb.getImage());
+            fileService.deleteImageFolder(properties.getStorage().getCategory(), inDb.getImage());
             repository.delete(inDb);
         }
     }
@@ -63,9 +63,9 @@ public class CategoriesService {
         if (inDb != null) {
             if (categories.getImage() != null) {
                 // Yeni resim ekleme bloğu
-                String filename = fileService.saveBase64StringAsFileCategories(categories.getImage(), properties.getStorage().getCategory(), inDb.getName());
+                String filename = fileService.saveBase64StringAsFile(categories.getImage(), properties.getStorage().getCategory(), inDb.getName());
                 // Kategori resimini güncellediğinde eski resmi silme bloğu başlangıcı
-                fileService.deleteCategoryImage(properties.getStorage().getCategory(), inDb.getImage());
+                fileService.deleteImageFolder(properties.getStorage().getCategory(), inDb.getImage());
                 inDb.setImage(filename);
             }
             inDb.setName(categories.name);

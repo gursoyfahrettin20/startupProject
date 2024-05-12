@@ -2,6 +2,8 @@ package com.ws.startupProject;
 
 import com.ws.startupProject.ourWeb.OurWeb;
 import com.ws.startupProject.ourWeb.OurWebRepository;
+import com.ws.startupProject.user.User;
+import com.ws.startupProject.user.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,9 +11,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import com.ws.startupProject.user.User;
-import com.ws.startupProject.user.UserRepository;
 
 @EnableJpaRepositories
 @SpringBootApplication
@@ -53,13 +52,38 @@ public class StartupProjectApplication {
     CommandLineRunner dummyAddOurWeb(OurWebRepository OurWebRepository) {
 
         return (args) -> {
+            var name = "";
             var InDb = OurWebRepository.findAll();
             if (InDb.size() != 0) {
                 return;
             }
-            for (var i = 1; i <= 3; i++) {
+            for (var i = 1; i <= 7; i++) {
                 OurWeb ourWeb = new OurWeb();
-                ourWeb.setName(i == 1 ? "Hakkımızda" : (i == 2 ? "Vizyonumuz" : "Misyonumuz"));
+
+                switch (i) {
+                    case 1:
+                        name = "Hakkımızda";
+                        break;
+                    case 2:
+                        name = "Vizyonumuz";
+                        break;
+                    case 3:
+                        name = "Misyonumuz";
+                        break;
+                    case 4:
+                        name = "AnaSayfa";
+                        break;
+                    case 5:
+                        name = "AnaManset";
+                        break;
+                    case 6:
+                        name = "AraManset";
+                        break;
+                    case 7:
+                        name = "SonManset";
+                        break;
+                }
+                ourWeb.setName(name);
                 ourWeb.setDetail("Detay alanı");
                 ourWeb.setImage("default");
                 OurWebRepository.save(ourWeb);

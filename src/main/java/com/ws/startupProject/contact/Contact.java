@@ -22,5 +22,6 @@ public class Contact {
 
     String mail;
 
+    @Lob
     String maps;
 }

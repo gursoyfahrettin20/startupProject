@@ -111,7 +111,7 @@ public class UserService {
 
             // Kullanıcı resimini güncellediğinde eski resmi silme bloğu başlangıcı
 
-            fileService.deleteProfileImage(properties.getStorage().getProfile(), inDb.getImage());
+            fileService.deleteImageFolder(properties.getStorage().getProfile(), inDb.getImage());
 
             // Kullanıcı resimini güncellediğinde eski resmi silme bloğu sonu
 
@@ -124,7 +124,7 @@ public class UserService {
     public void deleteUser(long id) {
         User inDb = getUser(id);
         if (inDb.getImage() != null) {
-            fileService.deleteProfileImage(properties.getStorage().getProfile(), inDb.getImage());
+            fileService.deleteImageFolder(properties.getStorage().getProfile(), inDb.getImage());
         }
         userRepository.delete(inDb);
     }

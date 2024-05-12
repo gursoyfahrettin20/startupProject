@@ -18,7 +18,7 @@ public class OurWebController {
     @Autowired
     OurWebService ourWebService;
 
-    //    Hakkımızda/Vizyonumuz/Misyonumuz Bilgilerinin kaydedilmesi
+    //    Hakkımızda/Vizyonumuz/Misyonumuz/Ana Sayfa Bilgilerinin kaydedilmesi
     @PostMapping("/newOurWeb/{id}")
     GenericMessage createOurWeb(@PathVariable long id, @RequestBody OurWebCreate ourWebCreate, @AuthenticationPrincipal CurrentUser currentUser) {
         GenericMessage message = new GenericMessage("Sitenin Yöneticisi Değilsiniz.");
@@ -29,13 +29,13 @@ public class OurWebController {
         return message;
     }
 
-    //    Hakkımızda/Vizyonumuz/Misyonumuz bilgilerinin listelenmesi
+    // Hakkımızda/Vizyonumuz/Misyonumuz/Ana Sayfa bilgilerinin listelenmesi
     @GetMapping("/ourWeb")
     public List<OurWeb> getOurWeb() {
         return ourWebService.getOurWeb();
     }
 
-    //    Hakkımızda/Vizyonumuz/Misyonumuz bilgilerinin silinmesi
+    // Hakkımızda/Vizyonumuz/Misyonumuz/Ana Sayfa bilgilerinin silinmesi
     @PostMapping("/ourWeb/{id}")
     GenericMessage deleteOurWeb(@PathVariable long id, @AuthenticationPrincipal CurrentUser currentUser) {
         GenericMessage message = new GenericMessage("Sitenin Yöneticisi Değilsiniz.");
@@ -46,7 +46,7 @@ public class OurWebController {
         return message;
     }
 
-    // Hakkımızda/Vizyonumuz/Misyonumuz bilgileinin güncellenmesi
+    // Hakkımızda/Vizyonumuz/Misyonumuz/Ana Sayfa bilgileinin güncellenmesi
     @PutMapping("/ourWeb/{id}")
     GenericMessage updateOurWeb(@PathVariable long id, @RequestBody OurWeb ourWeb, @AuthenticationPrincipal CurrentUser currentUser) {
         GenericMessage message = new GenericMessage("Sitenin Yöneticisi Değilsiniz.");

@@ -1,6 +1,8 @@
 package com.ws.startupProject.ourWeb;
 
 import com.ws.startupProject.configuration.CurrentUser;
+import com.ws.startupProject.configuration.WebSiteConfigurationProperties;
+import com.ws.startupProject.file.FileService;
 import com.ws.startupProject.shared.Messages;
 import com.ws.startupProject.user.exception.NotFoundExceptionContact;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,12 @@ public class OurWebService {
     @Autowired
     OurWebRepository repository;
 
+    @Autowired
+    private FileService fileService;
+
+    @Autowired
+    WebSiteConfigurationProperties properties;
+
     // İlitişim Bilgileri varmı diye kontrol eder, yoksa hata mesajı döner.
     public OurWeb getOurWeb(Long id) {
         return repository.findById(id).orElseThrow(() -> new NotFoundExceptionContact(id));
@@ -23,6 +31,10 @@ public class OurWebService {
     //    kaydedilmesi
     public void save(OurWeb ourWeb, CurrentUser currentUser) {
         if (currentUser != null) {
+            if (ourWeb.getImage() != null) {
+                String filename = fileService.saveBase64StringAsFile(ourWeb.getImage(), properties.getStorage().getPages(), ourWeb.getName());
+                ourWeb.setImage(filename);
+            }
             repository.save(ourWeb);
         } else {
             String message = Messages.getMessageForLocale("website.contact.messages.notFoundUser", LocaleContextHolder.getLocale());
@@ -47,7 +59,13 @@ public class OurWebService {
     public Object update(OurWeb ourWeb) {
         OurWeb inDb = getOurWeb(ourWeb.id);
         if (inDb != null) {
+            if (ourWeb.getImage() != null) {
+                fileService.deleteImageFolder(properties.getStorage().getPages(), inDb.getImage());
+                String filename = fileService.saveBase64StringAsFile(ourWeb.getImage(), properties.getStorage().getPages(), ourWeb.getName());
+                ourWeb.setImage(filename);
+            }
             inDb.setDetail(ourWeb.detail);
+            inDb.setImage(ourWeb.image);
         }
         return repository.save(inDb);
     }

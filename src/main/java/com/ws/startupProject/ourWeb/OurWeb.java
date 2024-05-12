@@ -14,6 +14,7 @@ public class OurWeb {
 
     String name;
 
+    @Lob
     String image;
 
     String detail;
