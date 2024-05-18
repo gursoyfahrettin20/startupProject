@@ -1,12 +1,12 @@
-package com.ws.startupProject.slider;
+package com.ws.startupProject.news;
 
 import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "slider", uniqueConstraints = @UniqueConstraint(columnNames = {"id"}))
-public class Slider {
+@Table(name="news", uniqueConstraints = @UniqueConstraint(columnNames = {"id"}))
+public class News {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -22,5 +22,4 @@ public class Slider {
     String shortDetail;
 
     String link;
-
 }

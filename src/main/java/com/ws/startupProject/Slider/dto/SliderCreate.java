@@ -1,6 +1,6 @@
-package com.ws.startupProject.Slider.dto;
+package com.ws.startupProject.slider.dto;
 
-import com.ws.startupProject.Slider.Slider;
+import com.ws.startupProject.slider.Slider;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 

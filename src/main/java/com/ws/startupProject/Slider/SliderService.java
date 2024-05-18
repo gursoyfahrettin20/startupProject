@@ -1,4 +1,4 @@
-package com.ws.startupProject.Slider;
+package com.ws.startupProject.slider;
 
 import com.ws.startupProject.configuration.CurrentUser;
 import com.ws.startupProject.configuration.WebSiteConfigurationProperties;
@@ -31,7 +31,7 @@ public class SliderService {
     // Slider fotoğraflarının kaydedilmesi
     public void save(Slider slider, CurrentUser currentUser) {
         if (currentUser != null) {
-            if (slider.getImage() != null) {
+            if (slider.getImage() != null && !slider.getImage().equals("default")) {
                 String filename = fileService.saveBase64StringAsFile(slider.getImage(), properties.getStorage().getSlider(), slider.getName());
                 slider.setImage(filename);
             }
@@ -60,7 +60,7 @@ public class SliderService {
     public Object updateSlider(Slider slider) {
         Slider inDb = getSlider(slider.id);
         if (inDb != null) {
-            if (slider.getImage() != null) {
+            if (slider.getImage() != null && !slider.getImage().equals("default")) {
                 fileService.deleteImageFolder(properties.getStorage().getSlider(), inDb.getImage());
                 String filename = fileService.saveBase64StringAsFile(slider.getImage(), properties.getStorage().getSlider(), slider.getName());
                 slider.setImage(filename);

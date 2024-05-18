@@ -31,7 +31,7 @@ public class OurWebService {
     //  OurWeb kaydedilmesi
     public void save(OurWeb ourWeb, CurrentUser currentUser) {
         if (currentUser != null) {
-            if (ourWeb.getImage() != null) {
+            if (ourWeb.getImage() != null && !ourWeb.getImage().equals("default")) {
                 String filename = fileService.saveBase64StringAsFile(ourWeb.getImage(), properties.getStorage().getPages(), ourWeb.getName());
                 ourWeb.setImage(filename);
             }
@@ -59,7 +59,7 @@ public class OurWebService {
     public Object update(OurWeb ourWeb) {
         OurWeb inDb = getOurWeb(ourWeb.id);
         if (inDb != null) {
-            if (ourWeb.getImage() != null) {
+            if (ourWeb.getImage() != null && !ourWeb.getImage().equals("default")) {
                 fileService.deleteImageFolder(properties.getStorage().getPages(), inDb.getImage());
                 String filename = fileService.saveBase64StringAsFile(ourWeb.getImage(), properties.getStorage().getPages(), ourWeb.getName());
                 ourWeb.setImage(filename);

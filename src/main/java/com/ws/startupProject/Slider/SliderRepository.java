@@ -1,4 +1,4 @@
-package com.ws.startupProject.Slider;
+package com.ws.startupProject.slider;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
