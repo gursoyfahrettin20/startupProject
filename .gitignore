@@ -34,3 +34,20 @@ build/
 
 ### History ###
 .history
+
+### Upload Files ###
+*.uploads
+*.png
+uploads/category/Slider-1-17-05-2024-01-16-26.879.jpeg
+uploads/product/Ürün-1-12-05-2024-17-38-52.423.png
+uploads/product/Ürün-1-12-05-2024-17-38-52.433.png
+uploads/product/Ürün-1-16-05-2024-22-35-39.033.png
+uploads/product/Ürün-1-16-05-2024-22-35-39.037.png
+uploads/product/Ürün-1-16-05-2024-22-35-39.039.png
+uploads/product/Ürün-1-16-05-2024-22-35-39.043.png
+uploads/product/Ürün-2-12-05-2024-17-39-15.651.png
+uploads/product/Ürün-2-12-05-2024-17-39-15.656.png
+uploads/product/Ürün-2-12-05-2024-17-39-15.671.png
+uploads/product/Ürün-2-16-05-2024-22-35-10.326.png
+uploads/product/Ürün-2-16-05-2024-22-35-10.329.png
+uploads/slider/Slider-2-19-05-2024-01-29-22.476.jpeg

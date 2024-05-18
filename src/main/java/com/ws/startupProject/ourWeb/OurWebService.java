@@ -23,12 +23,12 @@ public class OurWebService {
     @Autowired
     WebSiteConfigurationProperties properties;
 
-    // İlitişim Bilgileri varmı diye kontrol eder, yoksa hata mesajı döner.
+    // OurWeb Bilgileri varmı diye kontrol eder, yoksa hata mesajı döner.
     public OurWeb getOurWeb(Long id) {
         return repository.findById(id).orElseThrow(() -> new NotFoundExceptionContact(id));
     }
 
-    //    kaydedilmesi
+    //  OurWeb kaydedilmesi
     public void save(OurWeb ourWeb, CurrentUser currentUser) {
         if (currentUser != null) {
             if (ourWeb.getImage() != null) {
@@ -42,12 +42,12 @@ public class OurWebService {
         }
     }
 
-    //    listeleme alanı
+    //  OurWeb  listeleme alanı
     public List<OurWeb> getOurWeb() {
         return repository.findAll();
     }
 
-    //    silinmesi
+    //  OurWeb  silinmesi
     public void deleteOurWeb(long id) {
         OurWeb inDb = getOurWeb(id);
         if (inDb != null) {
@@ -55,7 +55,7 @@ public class OurWebService {
         }
     }
 
-    // güncellenmesi
+    // OurWeb güncellenmesi
     public Object update(OurWeb ourWeb) {
         OurWeb inDb = getOurWeb(ourWeb.id);
         if (inDb != null) {

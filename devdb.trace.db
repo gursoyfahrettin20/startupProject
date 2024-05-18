@@ -1,6 +1,0 @@
-2024-05-12 19:09:05.000506+03:00 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLDataException: Value too long for column "MAPS CHARACTER VARYING(255)": "'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14328.227617808046!2d29.0... (303)"; SQL statement:
-update contact set address=?,branch_name=?,branch_number=?,mail=?,maps=?,mobil_number=? where id=? [22001-224]
-2024-05-12 19:09:49.671932+03:00 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLDataException: Value too long for column "MAPS CHARACTER VARYING(255)": "'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14328.227617808046!2d29.0... (303)"; SQL statement:
-update contact set address=?,branch_name=?,branch_number=?,mail=?,maps=?,mobil_number=? where id=? [22001-224]
