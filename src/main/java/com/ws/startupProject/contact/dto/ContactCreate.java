@@ -13,10 +13,10 @@ public record ContactCreate(
         @Size(min = 1, max = 255)
         String address,
 
-        @Size(min = 0, max = 13)
+        @Size(min = 0, max = 20)
         String mobilNumber,
 
-        @Size(min = 1, max = 13)
+        @Size(min = 0, max = 20)
         String branchNumber,
 
         @NotBlank(message = "{website.contact.messages.notnull}")
