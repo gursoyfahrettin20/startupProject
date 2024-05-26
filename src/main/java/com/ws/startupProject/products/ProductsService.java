@@ -44,6 +44,11 @@ public class ProductsService {
         return null;
     }
 
+    // Ürünlerin listeleme alanı
+    public Page<Products> getWProducts(Pageable page) {
+        return repository.findAll(page);
+    }
+
     // Ürünlerin silinmesi
     public void deleteProducts(String id) {
         Products inDb = getProduct(id);

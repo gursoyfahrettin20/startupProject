@@ -36,6 +36,11 @@ public class ProductsController {
         return service.getProducts(page, currentUser).map(ProductDto::new);
     }
 
+    // Web tarafında Ürün bilgilerinin listelenmesi
+    @GetMapping("/wProducts")
+    public Page<ProductDto> getProducts(Pageable page) {
+        return service.getWProducts(page).map(ProductDto::new);
+    }
 
     // Ürün bilgilerinin silinmesi
     @DeleteMapping("/products/{id}")

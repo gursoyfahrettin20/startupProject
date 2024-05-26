@@ -1,8 +1,8 @@
 package com.ws.startupProject.slider;
 
-import com.ws.startupProject.slider.dto.SliderCreate;
 import com.ws.startupProject.configuration.CurrentUser;
 import com.ws.startupProject.shared.GenericMessage;
+import com.ws.startupProject.slider.dto.SliderCreate;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -37,6 +37,12 @@ public class SliderController {
             return service.getSliderList();
         }
         return null;
+    }
+
+    // Web tarafında Slider resimlerinin listelenmesi
+    @GetMapping("/wSlider")
+    public List<Slider> getSlider() {
+        return service.getSliderList();
     }
 
     // Slider resimlerinin silinmesi

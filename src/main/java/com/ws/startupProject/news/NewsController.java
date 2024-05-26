@@ -20,7 +20,7 @@ public class NewsController {
     NewsService service;
 
 
-    // News resimlerinin kaydedilmesi
+    // News kaydedilmesi
     @PostMapping("/newNews")
     GenericMessage createNews(@Valid @RequestBody NewsCreate newsCreate, @AuthenticationPrincipal CurrentUser currentUser) {
         GenericMessage message = new GenericMessage("Siteye Giriş yapmadınız.");
@@ -31,7 +31,7 @@ public class NewsController {
         return message;
     }
 
-    // News resimlerinin listelenmesi
+    // News listelenmesi
     @GetMapping("/news")
     public List<News> getNews(@AuthenticationPrincipal CurrentUser currentUser) {
         if (currentUser.getIsAdministrator()) {
@@ -40,7 +40,13 @@ public class NewsController {
         return null;
     }
 
-    // News resimlerinin silinmesi
+    // Web tarafında News listelenmesi
+    @GetMapping("/wNews")
+    public List<News> getNews() {
+        return service.getNewsList();
+    }
+
+    // News silinmesi
     @DeleteMapping("/news/{id}")
     GenericMessage deleteNews(@PathVariable String id, @AuthenticationPrincipal CurrentUser currentUser) {
         GenericMessage message = new GenericMessage("Sitenin Yöneticisi Değilsiniz.");
@@ -51,7 +57,7 @@ public class NewsController {
         return message;
     }
 
-    // News resimlerinin güncellenmesi
+    // News güncellenmesi
     @PutMapping("/news/{id}")
     GenericMessage updateNews(@Valid @PathVariable Long id,  @RequestBody News news, @AuthenticationPrincipal CurrentUser currentUser) {
         GenericMessage message = new GenericMessage("Sitenin Yöneticisi Değilsiniz.");
