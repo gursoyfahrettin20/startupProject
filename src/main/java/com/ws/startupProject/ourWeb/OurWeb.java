@@ -18,4 +18,6 @@ public class OurWeb {
     String image;
 
     String detail;
+
+    String language;
 }

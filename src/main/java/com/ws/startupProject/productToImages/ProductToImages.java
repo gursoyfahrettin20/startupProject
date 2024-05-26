@@ -3,6 +3,7 @@ package com.ws.startupProject.productToImages;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ws.startupProject.products.Products;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
@@ -20,5 +21,8 @@ public class ProductToImages {
     @ManyToOne
     @JoinColumn(name ="productId")
     Products products;
+
+
+    String language;
 
 }

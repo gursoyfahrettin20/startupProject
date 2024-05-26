@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ws.startupProject.categories.Categories;
 import com.ws.startupProject.productToImages.ProductToImages;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.util.List;
@@ -27,5 +28,8 @@ public class Products {
 
     @OneToMany(mappedBy = "products", cascade = CascadeType.REMOVE)
     List<ProductToImages> productToImages;
+
+
+    String language;
 
 }

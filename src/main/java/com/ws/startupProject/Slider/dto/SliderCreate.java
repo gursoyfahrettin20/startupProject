@@ -17,11 +17,13 @@ public record SliderCreate(
         @Size(max = 300)
         String shortDetail,
 
-
         @Size(max = 150)
-        String link
-) {
+        String link,
 
+        @Size(max = 5)
+        String language
+
+) {
         public Slider toSlider() {
                 Slider slider = new Slider();
                 slider.setName(name);
@@ -29,6 +31,7 @@ public record SliderCreate(
                 slider.setImage(image);
                 slider.setShortDetail(shortDetail);
                 slider.setDetail(detail);
+                slider.setLanguage(language);
                 return slider;
         }
 }

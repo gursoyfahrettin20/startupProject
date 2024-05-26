@@ -19,13 +19,17 @@ public record ProductsCreate(
 
         Categories categories,
 
-        ProductToImages productToImages
+        ProductToImages productToImages,
+
+        @Size(max = 5)
+        String language
 ) {
     public Products toProducts() {
         Products products = new Products();
         products.setName(name);
         products.setDetail(detail);
         products.setCategories(categories);
+        products.setLanguage(language);
         products.setProductToImages(Collections.singletonList(productToImages));
         return products;
     }

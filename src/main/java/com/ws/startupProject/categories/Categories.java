@@ -25,4 +25,6 @@ public class Categories {
     @OneToMany(mappedBy = "categories", cascade = CascadeType.REMOVE)
     List<Products> products;
 
+    String language;
+
 }

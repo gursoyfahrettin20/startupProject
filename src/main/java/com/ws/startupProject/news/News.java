@@ -22,4 +22,6 @@ public class News {
     String shortDetail;
 
     String link;
+
+    String language;
 }

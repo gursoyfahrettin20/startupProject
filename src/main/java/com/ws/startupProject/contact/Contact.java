@@ -24,4 +24,6 @@ public class Contact {
 
     @Lob
     String maps;
+
+    String language;
 }

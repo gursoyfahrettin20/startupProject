@@ -11,13 +11,17 @@ public record OurWebCreate(
         @NotBlank(message = "Boş Olamaz")
         @Size(min = 1, max = 10000)
         String detail,
-        String image
+        String image,
+
+        @Size(max = 5)
+        String language
 ) {
     public OurWeb toOurWeb() {
         OurWeb ourWeb = new OurWeb();
         ourWeb.setName(name);
         ourWeb.setDetail(detail);
         ourWeb.setImage(image);
+        ourWeb.setLanguage(language);
         return ourWeb;
     }
 }

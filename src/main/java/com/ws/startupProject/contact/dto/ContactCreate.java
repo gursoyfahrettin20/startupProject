@@ -24,7 +24,10 @@ public record ContactCreate(
         String mail,
 
         @Lob
-        String maps
+        String maps,
+
+        @Size(max = 5)
+        String language
 
 ) {
     public Contact toContact() {
@@ -35,6 +38,7 @@ public record ContactCreate(
         contact.setBranchNumber(branchNumber);
         contact.setMail(mail);
         contact.setMaps(maps);
+        contact.setLanguage(language);
         return contact;
     }
 }

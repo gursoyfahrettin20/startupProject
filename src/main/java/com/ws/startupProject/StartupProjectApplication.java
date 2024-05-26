@@ -53,39 +53,76 @@ public class StartupProjectApplication {
 
         return (args) -> {
             var name = "";
+            var language = "tr";
             var InDb = OurWebRepository.findAll();
             if (InDb.size() != 0) {
                 return;
             }
-            for (var i = 1; i <= 7; i++) {
+            for (var i = 1; i <= 14; i++) {
                 OurWeb ourWeb = new OurWeb();
 
                 switch (i) {
                     case 1:
                         name = "Hakkımızda";
+                        language = "tr";
                         break;
                     case 2:
-                        name = "Vizyonumuz";
+                        name = "About Us";
+                        language = "en";
                         break;
                     case 3:
-                        name = "Misyonumuz";
+                        name = "Vizyonumuz";
+                        language = "tr";
                         break;
                     case 4:
-                        name = "AnaSayfa";
+                        name = "Our Vision";
+                        language = "en";
                         break;
                     case 5:
-                        name = "AnaManset";
+                        name = "Misyonumuz";
+                        language = "tr";
                         break;
                     case 6:
-                        name = "AraManset";
+                        name = "Our Mission";
+                        language = "en";
                         break;
                     case 7:
-                        name = "SonManset";
+                        name = "Ana Sayfa";
+                        language = "tr";
+                        break;
+                    case 8:
+                        name = "Main Page";
+                        language = "en";
+                        break;
+                    case 9:
+                        name = "Ana Manşet";
+                        language = "tr";
+                        break;
+                    case 10:
+                        name = "Main Headline";
+                        language = "en";
+                        break;
+                    case 11:
+                        name = "Ara Manşet";
+                        language = "tr";
+                        break;
+                    case 12:
+                        name = "Search Headline";
+                        language = "en";
+                        break;
+                    case 13:
+                        name = "Son Manşet";
+                        language = "tr";
+                        break;
+                    case 14:
+                        name = "Last Headline";
+                        language = "en";
                         break;
                 }
                 ourWeb.setName(name);
                 ourWeb.setDetail("Detay alanı");
                 ourWeb.setImage("default");
+                ourWeb.setLanguage(language);
                 OurWebRepository.save(ourWeb);
             }
         };

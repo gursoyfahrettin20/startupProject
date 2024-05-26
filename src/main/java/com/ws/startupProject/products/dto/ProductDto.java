@@ -11,9 +11,12 @@ public class ProductDto {
 
     String detail;
 
+    String language;
+
     public ProductDto(Products products) {
         setId(products.getId());
         setName(products.getName());
         setDetail(products.getDetail());
+        setLanguage(products.getLanguage());
     }
 }

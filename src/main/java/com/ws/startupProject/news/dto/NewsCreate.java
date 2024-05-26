@@ -19,7 +19,10 @@ public record NewsCreate(
 
 
         @Size(max = 150)
-        String link
+        String link,
+
+        @Size(max = 5)
+        String language
 ) {
     public News toNews() {
         News news = new News();
@@ -28,6 +31,7 @@ public record NewsCreate(
         news.setImage(image);
         news.setShortDetail(shortDetail);
         news.setDetail(detail);
+        news.setLanguage(language);
         return news;
     }
 }
