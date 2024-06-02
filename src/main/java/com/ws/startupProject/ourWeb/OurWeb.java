@@ -17,6 +17,7 @@ public class OurWeb {
     @Lob
     String image;
 
+    @Lob
     String detail;
 
     String language;

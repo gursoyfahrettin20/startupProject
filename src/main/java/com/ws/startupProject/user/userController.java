@@ -15,6 +15,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequestMapping("/api/v1")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -45,6 +47,12 @@ public class userController {
     @GetMapping("/users")
     public Page<UserDTO> getUser(Pageable page, @AuthenticationPrincipal CurrentUser currentUser) {
         return userService.getUsers(page, currentUser).map(UserDTO::new);
+    }
+
+    // web Tarafında User List (all user)
+    @GetMapping("/wUsers")
+    public List<User> getWUsers() {
+        return userService.getWUsers();
     }
 
     // select id for user detail area

@@ -19,6 +19,7 @@ public class Products {
 
     String name;
 
+    @Lob
     String detail;
 
     @JsonIgnore

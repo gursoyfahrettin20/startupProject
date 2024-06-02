@@ -8,12 +8,8 @@ public record CategoriesCreate(
         @NotBlank(message = "Kategori İsmi Boş Olamaz")
         @Size(min = 1, max = 100)
         String name,
-
         String image,
-
-        @Size(max = 800)
         String detail,
-
         @Size(max = 5)
         String language
 ) {

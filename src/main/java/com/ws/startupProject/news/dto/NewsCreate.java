@@ -11,12 +11,9 @@ public record NewsCreate(
 
         String image,
 
-        @Size(max = 1200)
         String detail,
 
-        @Size(max = 300)
         String shortDetail,
-
 
         @Size(max = 150)
         String link,

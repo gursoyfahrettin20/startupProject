@@ -9,7 +9,7 @@ public record OurWebCreate(
 //        @Size(min = 1, max = 100)
         String name,
         @NotBlank(message = "Boş Olamaz")
-        @Size(min = 1, max = 10000)
+        @Size(min = 1)
         String detail,
         String image,
 

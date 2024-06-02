@@ -14,7 +14,6 @@ public record ProductsCreate(
         @Size(min = 1, max = 150)
         String name,
 
-        @Size(max = 1200)
         String detail,
 
         Categories categories,

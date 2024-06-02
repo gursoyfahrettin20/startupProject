@@ -1,14 +1,18 @@
 package com.ws.startupProject.user;
 
-import java.util.UUID;
-
 import com.ws.startupProject.auth.token.TokenRepository;
 import com.ws.startupProject.configuration.CurrentUser;
 import com.ws.startupProject.configuration.WebSiteConfigurationProperties;
+import com.ws.startupProject.email.EmailService;
 import com.ws.startupProject.file.FileService;
 import com.ws.startupProject.user.dto.PasswordResetRequest;
 import com.ws.startupProject.user.dto.PasswordUpdate;
 import com.ws.startupProject.user.dto.UserUpdate;
+import com.ws.startupProject.user.exception.ActivationNotificationException;
+import com.ws.startupProject.user.exception.InvalidTokenException;
+import com.ws.startupProject.user.exception.NotFoundException;
+import com.ws.startupProject.user.exception.NotUniqueEmailException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -17,13 +21,8 @@ import org.springframework.mail.MailException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.ws.startupProject.email.EmailService;
-import com.ws.startupProject.user.exception.ActivationNotificationException;
-import com.ws.startupProject.user.exception.InvalidTokenException;
-import com.ws.startupProject.user.exception.NotFoundException;
-import com.ws.startupProject.user.exception.NotUniqueEmailException;
-
-import jakarta.transaction.Transactional;
+import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -92,6 +91,10 @@ public class UserService {
         return userRepository.findByIdNot(0, page);
     }
 
+    public List<User> getWUsers() {
+        return userRepository.findAll();
+    }
+
     // Kullanıcı varmı diye kontrol eder, yoksa hata mesajı döner.
     public User getUser(long id) {
         return userRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
@@ -128,7 +131,6 @@ public class UserService {
         }
         userRepository.delete(inDb);
     }
-
 
     // password reset işlemleri
     public void handleResetRequest(PasswordResetRequest passwordResetRequest) {

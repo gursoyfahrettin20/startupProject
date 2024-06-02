@@ -20,6 +20,7 @@ public class Categories {
     @Lob
     String image;
 
+    @Lob
     String detail;
 
     @OneToMany(mappedBy = "categories", cascade = CascadeType.REMOVE)
