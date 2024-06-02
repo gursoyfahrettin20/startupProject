@@ -17,8 +17,10 @@ public class Slider {
     @Lob
     String image;
 
+    @Lob
     String detail;
 
+    @Lob
     String shortDetail;
 
     String link;
