@@ -8,18 +8,13 @@ public record SliderCreate(
         @NotBlank(message = "Slider İsmi Boş Olamaz")
         @Size(min = 1, max = 150)
         String name,
-
         String image,
 
-        @Size(max = 1200)
         String detail,
 
-        @Size(max = 300)
         String shortDetail,
-
         @Size(max = 150)
         String link,
-
         @Size(max = 5)
         String language
 
