@@ -8,6 +8,7 @@ public record CategoriesCreate(
         @NotBlank(message = "Kategori İsmi Boş Olamaz")
         @Size(min = 1, max = 100)
         String name,
+        String url,
         String image,
         String detail,
         @Size(max = 5)
@@ -16,6 +17,7 @@ public record CategoriesCreate(
     public Categories toCategories() {
         Categories categories = new Categories();
         categories.setName(name);
+        categories.setUrl(url);
         categories.setImage(image);
         categories.setDetail(detail);
         categories.setLanguage(language);

@@ -18,6 +18,8 @@ public class Products {
     String id;
 
     String name;
+    
+    String url;
 
     @Lob
     String detail;

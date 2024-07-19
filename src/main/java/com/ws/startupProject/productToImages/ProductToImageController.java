@@ -40,6 +40,12 @@ public class ProductToImageController {
         return null;
     }
 
+    // Web tarafında ürün resimlerinin listelenmesi
+    @GetMapping("/wProductToImage/{id}")
+    public List<ProductToImages> getProduct(@PathVariable String id) {
+        return service.getProductImagesList(id);
+    }
+
 
     // Ürün resimlerinin silinmesi
     @DeleteMapping("/productToImage/{id}")

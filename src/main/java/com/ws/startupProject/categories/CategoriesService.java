@@ -69,6 +69,7 @@ public class CategoriesService {
                 inDb.setImage(filename);
             }
             inDb.setName(categories.name);
+            inDb.setUrl(categories.url);
             inDb.setDetail(categories.detail);
         }
         return repository.save(inDb);

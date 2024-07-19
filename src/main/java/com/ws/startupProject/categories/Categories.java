@@ -17,6 +17,8 @@ public class Categories {
 
     String name;
 
+    String url;
+
     @Lob
     String image;
 

@@ -44,7 +44,7 @@ public class ProductsService {
         return null;
     }
 
-    // Ürünlerin listeleme alanı
+    // Web tarafında ürünlerin listeleme alanı
     public Page<Products> getWProducts(Pageable page) {
         return repository.findAll(page);
     }
@@ -65,6 +65,7 @@ public class ProductsService {
         Products inDb = getProduct(products.id);
         if (inDb != null) {
             inDb.setName(products.name);
+            inDb.setUrl(products.url);
             inDb.setDetail(products.detail);
             inDb.setProductToImages(products.productToImages);
         }

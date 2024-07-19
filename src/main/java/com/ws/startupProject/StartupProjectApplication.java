@@ -62,62 +62,62 @@ public class StartupProjectApplication {
                 OurWeb ourWeb = new OurWeb();
 
                 switch (i) {
-                    case 1:
+                    case 1 -> {
                         name = "Hakkımızda";
                         language = "tr";
-                        break;
-                    case 2:
+                    }
+                    case 2 -> {
                         name = "About Us";
                         language = "en";
-                        break;
-                    case 3:
+                    }
+                    case 3 -> {
                         name = "Vizyonumuz";
                         language = "tr";
-                        break;
-                    case 4:
+                    }
+                    case 4 -> {
                         name = "Our Vision";
                         language = "en";
-                        break;
-                    case 5:
+                    }
+                    case 5 -> {
                         name = "Misyonumuz";
                         language = "tr";
-                        break;
-                    case 6:
+                    }
+                    case 6 -> {
                         name = "Our Mission";
                         language = "en";
-                        break;
-                    case 7:
+                    }
+                    case 7 -> {
                         name = "Ana Sayfa";
                         language = "tr";
-                        break;
-                    case 8:
+                    }
+                    case 8 -> {
                         name = "Main Page";
                         language = "en";
-                        break;
-                    case 9:
+                    }
+                    case 9 -> {
                         name = "Ana Manşet";
                         language = "tr";
-                        break;
-                    case 10:
+                    }
+                    case 10 -> {
                         name = "Main Headline";
                         language = "en";
-                        break;
-                    case 11:
+                    }
+                    case 11 -> {
                         name = "Ara Manşet";
                         language = "tr";
-                        break;
-                    case 12:
+                    }
+                    case 12 -> {
                         name = "Search Headline";
                         language = "en";
-                        break;
-                    case 13:
+                    }
+                    case 13 -> {
                         name = "Son Manşet";
                         language = "tr";
-                        break;
-                    case 14:
+                    }
+                    case 14 -> {
                         name = "Last Headline";
                         language = "en";
-                        break;
+                    }
                 }
                 ourWeb.setName(name);
                 ourWeb.setDetail("Detay alanı");
