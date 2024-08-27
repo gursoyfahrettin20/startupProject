@@ -58,7 +58,7 @@ public class StartupProjectApplication {
             if (InDb.size() != 0) {
                 return;
             }
-            for (var i = 1; i <= 24; i++) {
+            for (var i = 1; i <= 26; i++) {
                 OurWeb ourWeb = new OurWeb();
 
                 switch (i) {
@@ -158,9 +158,17 @@ public class StartupProjectApplication {
                         name = "Youtube";
                         language = "en";
                     }
+                    case 25 -> {
+                        name = "Instagram";
+                        language = "tr";
+                    }
+                    case 26 -> {
+                        name = "Instagram";
+                        language = "en";
+                    }
                 }
                 ourWeb.setName(name);
-                ourWeb.setDetail("Detay alanı");
+                ourWeb.setDetail(name + " Detay alanı");
                 ourWeb.setImage("default");
                 ourWeb.setLanguage(language);
                 OurWebRepository.save(ourWeb);
