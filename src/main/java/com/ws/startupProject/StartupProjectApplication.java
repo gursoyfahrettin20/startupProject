@@ -58,7 +58,7 @@ public class StartupProjectApplication {
             if (InDb.size() != 0) {
                 return;
             }
-            for (var i = 1; i <= 14; i++) {
+            for (var i = 1; i <= 24; i++) {
                 OurWeb ourWeb = new OurWeb();
 
                 switch (i) {
@@ -116,6 +116,46 @@ public class StartupProjectApplication {
                     }
                     case 14 -> {
                         name = "Last Headline";
+                        language = "en";
+                    }
+                    case 15 -> {
+                        name = "X";
+                        language = "tr";
+                    }
+                    case 16 -> {
+                        name = "X";
+                        language = "en";
+                    }
+                    case 17 -> {
+                        name = "Facebook";
+                        language = "tr";
+                    }
+                    case 18 -> {
+                        name = "Facebook";
+                        language = "en";
+                    }
+                    case 19 -> {
+                        name = "Linkedin";
+                        language = "tr";
+                    }
+                    case 20 -> {
+                        name = "Linkedin";
+                        language = "en";
+                    }
+                    case 21 -> {
+                        name = "Google";
+                        language = "tr";
+                    }
+                    case 22 -> {
+                        name = "Google";
+                        language = "en";
+                    }
+                    case 23 -> {
+                        name = "Youtube";
+                        language = "tr";
+                    }
+                    case 24 -> {
+                        name = "Youtube";
                         language = "en";
                     }
                 }

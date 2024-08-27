@@ -1,4 +1,4 @@
-package com.ws.startupProject.categories;
+package com.ws.startupProject.finishedWorksCategories;
 
 import com.ws.startupProject.configuration.CurrentUser;
 import com.ws.startupProject.configuration.WebSiteConfigurationProperties;
@@ -12,10 +12,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CategoriesService {
-
+public class FinishedWorksCategoriesService {
     @Autowired
-    CategoriesRepository repository;
+    FinishedWorksCategoriesRepository repository;
 
     @Autowired
     private FileService fileService;
@@ -23,20 +22,19 @@ public class CategoriesService {
     @Autowired
     WebSiteConfigurationProperties properties;
 
-
     // id 'ye ait bilgileri varmı diye kontrol eder, yoksa hata mesajı döner.
-    public Categories getCategory(String id) {
+    public FinishedWorksCategories getCategories(String id) {
         return repository.findById(id).orElseThrow(() -> new NotFoundExceptionCategories(id));
     }
 
     // Kategorilerin kaydedilmesi
-    public void saveCategories(Categories categories, CurrentUser currentUser) {
-        if (currentUser != null) {
-            if (categories.getImage() != null) {
-                String filename = fileService.saveBase64StringAsFile(categories.getImage(), properties.getStorage().getCategory(), categories.getName());
-                categories.setImage(filename);
+    public void saveCategories(FinishedWorksCategories finishedWorksCategories, CurrentUser currentUser) {
+        if (null != currentUser) {
+            if (null != finishedWorksCategories.getImage()) {
+                String fileName = fileService.saveBase64StringAsFile(finishedWorksCategories.getImage(), properties.getStorage().getFinishedWorks(), finishedWorksCategories.getName());
+                finishedWorksCategories.setImage(fileName);
             }
-            repository.save(categories);
+            repository.save(finishedWorksCategories);
         } else {
             String message = Messages.getMessageForLocale("Kullanıcı Bulunamadı", LocaleContextHolder.getLocale());
             throw new ExceptionInInitializerError(message);
@@ -44,33 +42,33 @@ public class CategoriesService {
     }
 
     // Kategorilerin listeleme alanı
-    public List<Categories> getCategories() {
+    public List<FinishedWorksCategories> getCategories() {
         return repository.findAll();
     }
 
     // Kategorilerin silinmesi
     public void deleteCategories(String id) {
-        Categories inDb = getCategory(id);
-        if (inDb != null) {
+        FinishedWorksCategories inDb = getCategories(id);
+        if (null != inDb) {
             fileService.deleteImageFolder(properties.getStorage().getCategory(), inDb.getImage());
             repository.delete(inDb);
         }
     }
 
     // Kategorilerin güncellenmesi
-    public Object updateCategories(Categories categories) {
-        Categories inDb = getCategory(categories.id);
-        if (inDb != null) {
-            if (categories.getImage() != null) {
+    public Object updateCategories(FinishedWorksCategories finishedWorksCategories) {
+        FinishedWorksCategories inDb = getCategories(finishedWorksCategories.id);
+        if (null != inDb) {
+            if (null != finishedWorksCategories.getImage()) {
                 // Yeni resim ekleme bloğu
-                String filename = fileService.saveBase64StringAsFile(categories.getImage(), properties.getStorage().getCategory(), inDb.getName());
+                String fileName = fileService.saveBase64StringAsFile(finishedWorksCategories.getImage(), properties.getStorage().getFinishedWorks(), inDb.getName());
                 // Kategori resimini güncellediğinde eski resmi silme bloğu başlangıcı
-                fileService.deleteImageFolder(properties.getStorage().getCategory(), inDb.getImage());
-                inDb.setImage(filename);
+                fileService.deleteImageFolder(properties.getStorage().getFinishedWorks(), inDb.getImage());
+                inDb.setImage(fileName);
             }
-            inDb.setName(categories.name);
-            inDb.setUrl(categories.url);
-            inDb.setDetail(categories.detail);
+            inDb.setName(finishedWorksCategories.name);
+            inDb.setUrl(finishedWorksCategories.url);
+            inDb.setDetail(finishedWorksCategories.detail);
         }
         return repository.save(inDb);
     }

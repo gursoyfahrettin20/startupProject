@@ -36,6 +36,7 @@ public class WebSiteConfigurationProperties {
         String about = "about";
         String news = "news";
         String pages = "pages";
+        String finishedWorks = "finishedWorks";
         String pdfFile = "pdfFile";
         String wordFile = "wordFile";
         String excelFile = "excelFile";
