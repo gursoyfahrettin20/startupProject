@@ -19,10 +19,10 @@ public class Categories {
 
     String url;
 
-    @Lob
+    @Column(columnDefinition = "Text")
     String image;
 
-    @Lob
+    @Column(columnDefinition = "Text")
     String detail;
 
     @OneToMany(mappedBy = "categories", cascade = CascadeType.REMOVE)

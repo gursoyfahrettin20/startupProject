@@ -21,7 +21,7 @@ public class Products {
     
     String url;
 
-    @Lob
+    @Column(columnDefinition = "Text")
     String detail;
 
     @JsonIgnore

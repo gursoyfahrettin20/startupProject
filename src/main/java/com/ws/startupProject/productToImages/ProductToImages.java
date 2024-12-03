@@ -3,7 +3,6 @@ package com.ws.startupProject.productToImages;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ws.startupProject.products.Products;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
@@ -14,7 +13,7 @@ public class ProductToImages {
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
 
-    @Lob
+    @Column(columnDefinition = "Text")
     String image;
 
     @JsonIgnore

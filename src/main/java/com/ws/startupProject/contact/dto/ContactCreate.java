@@ -1,6 +1,7 @@
 package com.ws.startupProject.contact.dto;
 
 import com.ws.startupProject.contact.Contact;
+import jakarta.persistence.Column;
 import jakarta.persistence.Lob;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -23,7 +24,7 @@ public record ContactCreate(
         @Size(min = 1, max = 50)
         String mail,
 
-        @Lob
+        @Column(columnDefinition = "Text")
         String maps,
 
         @Size(max = 5)

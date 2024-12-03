@@ -13,7 +13,7 @@ public class FinishedWorksToImages {
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
 
-    @Lob
+    @Column(columnDefinition = "Text")
     String image;
 
     @JsonIgnore

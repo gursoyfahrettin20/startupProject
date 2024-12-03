@@ -20,7 +20,7 @@ public class FinishedWorks {
 
     String url;
 
-    @Lob
+    @Column(columnDefinition = "Text")
     String detail;
 
     @JsonIgnore

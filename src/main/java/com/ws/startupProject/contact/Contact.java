@@ -22,7 +22,7 @@ public class Contact {
 
     String mail;
 
-    @Lob
+    @Column(columnDefinition = "Text")
     String maps;
 
     String language;

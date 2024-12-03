@@ -19,10 +19,10 @@ public class FinishedWorksCategories {
 
     String url;
 
-    @Lob
+    @Column(columnDefinition = "Text")
     String image;
 
-    @Lob
+    @Column(columnDefinition = "Text")
     String detail;
 
     String language;

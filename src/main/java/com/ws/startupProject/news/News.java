@@ -14,13 +14,13 @@ public class News {
 
     String name;
 
-    @Lob
+    @Column(columnDefinition = "Text")
     String image;
 
-    @Lob
+    @Column(columnDefinition = "Text")
     String detail;
 
-    @Lob
+    @Column(columnDefinition = "Text")
     String shortDetail;
 
     String link;

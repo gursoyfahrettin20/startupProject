@@ -10,6 +10,7 @@ Projedeki özellikler aşağıdaki gibidir;
 - Rest ucuna giden responsların çoklu dil sistemi ile dönüş sağlanmıştır ve bu sayede develeper olarak daha anlaşılır olması sağlanmıştır.
 - Kullanıcı tarafından gelecek resim veya dosya'nın nereye gideceği daha önceden belirtilmiştir yok ise klasör oluşturarak dosyaları sistemli bir şekilde klasörleme yapısı oluşturulmuştur. ( uploads )
 - E-mail Servisi eklenmiştir. (Daha da geliştirilecektir)
+- Postgre SQL veri tabanı eklenmiştir.
 
 
-    ### Bu proje halen geliştirme aşamasındadır. İmkan buldukca iki günde bir güncellenmektedir. ###
+    ### Bu proje halen geliştirme aşamasındadır. İmkan buldukca güncellenmektedir. ###

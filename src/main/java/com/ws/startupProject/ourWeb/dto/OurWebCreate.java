@@ -1,6 +1,7 @@
 package com.ws.startupProject.ourWeb.dto;
 
 import com.ws.startupProject.ourWeb.OurWeb;
+import jakarta.persistence.Column;
 import jakarta.persistence.Lob;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -10,7 +11,7 @@ public record OurWebCreate(
 //        @Size(min = 1, max = 100)
         String name,
 
-        @Lob
+        @Column(columnDefinition = "Text")
         @NotBlank(message = "Boş Olamaz")
         @Size(min = 1)
         String detail,

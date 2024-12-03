@@ -10,9 +10,10 @@ spring:
   web:
     locale: en
   datasource:
-    url: jdbc:h2:file:./devdb;Auto_server=TRUE
-    username: sa
-    password:
+    url: jdbc:postgresql://localhost:5432/brssistem
+    username: postgres
+    password: 123
+    hikari: auto-commit
   jpa:
     properties:
       javax:
@@ -50,7 +51,7 @@ websiteconfiguration:
   client:
     host: http://localhost:3434
 
-    # Console bölümünde hata mesajlarınu loglayarak gösterim sağlar
+    # Console bölümünde hata mesajlarını loglayarak gösterim sağlar
 #logging:
 #  level:
 #    ROOT: ERROR

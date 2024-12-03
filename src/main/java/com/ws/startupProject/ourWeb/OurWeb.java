@@ -14,10 +14,10 @@ public class OurWeb {
 
     String name;
 
-    @Lob
+    @Column(columnDefinition = "Text")
     String image;
 
-    @Lob
+    @Column(columnDefinition = "Text")
     String detail;
 
     String language;

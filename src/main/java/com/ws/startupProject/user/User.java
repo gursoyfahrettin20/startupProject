@@ -27,7 +27,7 @@ public class User {
 
     String passwordResetToken;
 
-    @Lob
+    @Column(columnDefinition = "Text")
     String image;
 
     Boolean isAdministrator = false;
